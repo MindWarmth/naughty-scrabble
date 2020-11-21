@@ -10,7 +10,7 @@ import { useTransport, TYPE } from '../helpers/transport-provider';
 
 const Game = () => {
   const params = useParams();
-  const { gameID = 'test', dictionary, setDictionary, user } = useContext(Context);
+  const { gameID, dictionary, setDictionary, user } = useContext(Context);
   const [ fieldsData, setFieldsData ] = useState({});
   const [ canPlay, setCanPlay ] = useState(true)
   const transport = useTransport();
