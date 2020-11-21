@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/naughty-scrabble/static/css/main.1943d2bc.chunk.css",
+    "main.js": "/naughty-scrabble/static/js/main.f27341a1.chunk.js",
+    "main.js.map": "/naughty-scrabble/static/js/main.f27341a1.chunk.js.map",
+    "runtime-main.js": "/naughty-scrabble/static/js/runtime-main.ec6f6b90.js",
+    "runtime-main.js.map": "/naughty-scrabble/static/js/runtime-main.ec6f6b90.js.map",
+    "static/js/2.bf471367.chunk.js": "/naughty-scrabble/static/js/2.bf471367.chunk.js",
+    "static/js/2.bf471367.chunk.js.map": "/naughty-scrabble/static/js/2.bf471367.chunk.js.map",
+    "static/js/3.7bc36fdd.chunk.js": "/naughty-scrabble/static/js/3.7bc36fdd.chunk.js",
+    "static/js/3.7bc36fdd.chunk.js.map": "/naughty-scrabble/static/js/3.7bc36fdd.chunk.js.map",
+    "index.html": "/naughty-scrabble/index.html",
+    "static/css/main.1943d2bc.chunk.css.map": "/naughty-scrabble/static/css/main.1943d2bc.chunk.css.map",
+    "static/js/2.bf471367.chunk.js.LICENSE.txt": "/naughty-scrabble/static/js/2.bf471367.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ec6f6b90.js",
+    "static/js/2.bf471367.chunk.js",
+    "static/css/main.1943d2bc.chunk.css",
+    "static/js/main.f27341a1.chunk.js"
+  ]
+}
