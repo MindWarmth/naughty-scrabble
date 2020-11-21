@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 
 const Join = () => {
   const { gameID } = useParams();
@@ -9,7 +9,9 @@ const Join = () => {
     <div>
       <h1>Join to the SRRRABBBLE</h1>
       <code>{gameID}</code>
-      <p><Link to={ `/game/${nanoid()}` }>Join</Link></p>
+      <p>
+        <Button component={ Link } to={ `/game/${gameID}` } color="primary" variant="contained">Join</Button>
+      </p>
     </div>
   );
 }

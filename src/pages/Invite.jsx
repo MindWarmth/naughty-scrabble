@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { Link } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
@@ -47,14 +48,16 @@ const Invite = () => {
       }
       {
         navigator.clipboard && 
-        <p><IconButton onClick={ handleOnClickCopyToClipboard }>
+        <p><IconButton onClick={ handleOnClickCopyToClipboard } aria-label="paste from clipboard" component="span" >
           {
             copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> :
             copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />
           }
         </IconButton></p>
       }
-      <p><Link to={ gamePath }>Go to the game</Link></p>
+      <p>
+        <Button component={ Link } to={ gamePath } color="primary" variant="contained">Go to the game</Button>
+      </p>
     </div>
   );
 };
