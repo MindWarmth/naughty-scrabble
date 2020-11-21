@@ -12,25 +12,23 @@ const Game = () => {
   const { gameID, dictionary, setDictionary, user } = useContext(Context);
   const transport = useTransport();
 
-  if (!gameID && params.gameID) {
-    return <Redirect to={`/join/${params.gameID}`} />
-  }
-
-  const handleMessage = (message) => {
-    if (message.type === TYPE.VOCABULARY) {
-      setDictionary(message.data);
-    }
-  }
-
   useEffect(() => {
-    transport.onMessage((handleMessage));
+    transport.onMessage((message) => {
+      if (message.type === TYPE.DICTIONARY) {
+        setDictionary(message.data);
+      }
+    });
     if (dictionary) {
       transport.sendMessage({
-        type: TYPE.VOCABULARY,
+        type: TYPE.DICTIONARY,
         data: dictionary,
       });
     }
   }, []);
+
+  if (!gameID && params.gameID) {
+    return <Redirect to={`/join/${params.gameID}`} />
+  }
 
   return (
     <div>

@@ -20,20 +20,18 @@ function Log() {
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
 
-  const handleMessage = (message) => {
-    if (message.type === TYPE.MESSAGE) {
-      setLogs(prevLogs => [message.data, ...prevLogs]);
-    }
-  }
-
   useEffect(() => {
-    transport.onMessage(handleMessage);
+    transport.onMessage((message) => {
+      if (message.type === TYPE.MESSAGE) {
+        setLogs(prevLogs => [message.data, ...prevLogs]);
+      }
+    });
     setTimeout(() => {
       transport.sendMessage({
         type: TYPE.MESSAGE,
         data: `${user} joined`,
       });
-    }, 1000)
+    }, 1000);
   }, []);
 
   return (

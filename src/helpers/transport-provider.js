@@ -2,7 +2,7 @@ import React, { useContext, createContext, useEffect, useState } from 'react';
 import Context from '../context';
 
 export const TYPE = {
-  VOCABULARY: 'vocabulary',
+  DICTIONARY: 'dictionary',
   MESSAGE: 'message',
 };
 
