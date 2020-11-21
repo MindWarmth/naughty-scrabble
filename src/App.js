@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Context from './context';
 import Welcome from './pages/Welcome';
 import Create from './pages/Create';
 import Invite from './pages/Invite';
@@ -25,39 +26,42 @@ function App() {
       },
     }
   });
+  const [ gameID, setGameID ] = useState();
   const WEB_SOCKET_URL = 'ws://88.99.175.232:8054';
 
   return (
     <Router>
-      <ThemeProvider theme={theme}>
+      <Context.Provider value={{ gameID, setGameID }}>
         <TransportProvider url={WEB_SOCKET_URL}>
-          <div className="app">
-            <Switch>
+          <ThemeProvider theme={theme}>
+            <div className="app">
+              <Switch>
 
-              <Route path="/create">
-                <Create />
-              </Route>
+                <Route path="/create">
+                  <Create />
+                </Route>
 
-              <Route path="/invite">
-                <Invite />
-              </Route>
+                <Route path="/invite">
+                  <Invite />
+                </Route>
 
-              <Route path="/join/:gameID">
-                <Join />
-              </Route>
+                <Route path="/join/:gameID">
+                  <Join />
+                </Route>
 
-              <Route path="/game/:gameID">
-                <Game />
-              </Route>
-            
-              <Route path="/">
-                <Welcome />
-              </Route>
+                <Route path="/game/:gameID">
+                  <Game />
+                </Route>
+              
+                <Route path="/">
+                  <Welcome />
+                </Route>
 
-            </Switch>        
-          </div>
+              </Switch>        
+            </div>
+          </ThemeProvider>
         </TransportProvider>
-      </ThemeProvider>
+      </Context.Provider>
     </Router>
   );
 }
