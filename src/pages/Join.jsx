@@ -29,31 +29,33 @@ const Join = () => {
   }, [ gameID ]);
 
   return (
-    <div>
-      <h1>Join to the game</h1>
-      <Grid container spacing={ 3 }>
-        <Grid item xs={ 12 }>
-          <code>Game ID: {gameID}</code>
-        </Grid>
-        <Grid item xs={ 6 }>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={ onJoinClick }
-            size="large"
-            disabled={ loading }
-            startIcon={ loading && <CircularProgress size={ 16 } /> }
-          >
-            Join game
-          </Button>
-        </Grid>
-        <Grid item xs={ 6 }>
-          <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
-            Create<Hidden xsDown> new game</Hidden>
-          </Button>
+    <Grid container direction="row" justify="center">
+      <Grid item xs={ 12 } md={ 6 }>
+        <Grid container spacing={ 3 }>
+          <Grid item xs={ 12 }>
+            <h1>Join to the game</h1>
+            <code>Game ID: {gameID}</code>
+          </Grid>
+          <Grid item xs={ 6 }>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={ onJoinClick }
+              size="large"
+              disabled={ loading }
+              startIcon={ loading && <CircularProgress size={ 16 } /> }
+            >
+              Join game
+            </Button>
+          </Grid>
+          <Grid item xs={ 6 }>
+            <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+              Create<Hidden xsDown> new game</Hidden>
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 }
 

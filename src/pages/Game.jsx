@@ -60,40 +60,40 @@ const Game = () => {
   }
 
   return (
-    <div>
-      <h1>Game ID: <code>{gameID}</code></h1>
-      <p>user: <code>{user}</code></p>
-      <Grid container direction="row" alignItems="center" spacing={ 3 }>
-        <Grid item xs={ 12 } sm={ 8 }>
-          <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
-        </Grid>
-        <Grid item xs={ 12 } sm={ 4 }>
-          <Grid container direction="column" alignItems="stretch">
+    <Grid container direction="row" justify="center" alignItems="flex-start" spacing={ 3 }>
+      <Grid item xs={ 12 } md={ 10 }>
+        <h1>Game ID: <code>{gameID}</code></h1>
+        <p>user: <code>{user}</code></p>
+      </Grid>
+      <Grid item xs={ 12 } sm={ 6 }>
+        <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
+      </Grid>
+      <Grid item xs={ 12 } sm={ 6 } md={ 4 }>
+        <Grid container direction="column" alignItems="stretch">
+          <Grid item xs={ 12 }>
+            <p>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</p>
+          </Grid>
+          <Hidden xsDown>
             <Grid item xs={ 12 }>
-              <p>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</p>
+              <Log />
             </Grid>
-            <Hidden xsDown>
-              <Grid item xs={ 12 }>
-                <Log />
-              </Grid>
-            </Hidden>
-            <Grid item xs={ 12 }>
-              <Scoreboard />
-            </Grid>
-            <Grid item xs={ 12 }>
-              <Controls />
-            </Grid>
+          </Hidden>
+          <Grid item xs={ 12 }>
+            <Scoreboard />
+          </Grid>
+          <Grid item xs={ 12 }>
+            <Controls />
           </Grid>
         </Grid>
-        {
-          dictionary && dictionary.length && (
-            <Grid item xs={ 12 }>
-              <code>{ dictionary.map((word) => `${word}, `) }</code>
-            </Grid>
-          )
-        }
       </Grid>
-    </div>
+      {
+        dictionary && dictionary.length && (
+          <Grid item xs={ 12 } md={ 10 }>
+            <code>{ dictionary.map((word) => `${word}, `) }</code>
+          </Grid>
+        )
+      }
+    </Grid>
   );
 }
 

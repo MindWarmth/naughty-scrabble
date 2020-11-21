@@ -61,67 +61,69 @@ const Invite = () => {
   }
   
   return (
-    <div>
-      <h1>Share link</h1>
-      <p>Share this link with your friend to play together:</p>
-      <Grid container spacing={ 3 }>
-        <Grid item xs={ 12 }>
-          <code>{`${gameURL}`}</code>
-        </Grid>
-        <Grid item xs={ 12 }>
-          <Grid container>
-            {
-              navigator.clipboard && (
-                <Grid item xs={ 6 }>
-                  <Button
-                    color="secondary"
-                    variant="outlined"
-                    onClick={ handleOnClickCopyToClipboard }
-                    size="large"
-                    startIcon={copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> : copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />}
-                  >
-                    Copy<Hidden xsDown> to cliboard</Hidden>
-                  </Button>
-                </Grid>
-              )
-            }
-            {
-              navigator.share && (
-                <Grid item xs={ 6 }>
-                  <Button
-                    color="secondary"
-                    variant="outlined"
-                    onClick={ handleOnClickShare }
-                    size="large"
-                    startIcon={<ShareIcon />}
-                  >
-                    Share
-                  </Button>
-                </Grid>
-              )
-            }
+    <Grid container direction="row" justify="center">
+      <Grid item xs={ 12 } md={ 6 }>
+        <Grid container spacing={ 3 }>
+          <Grid item xs={ 12 }>
+            <h1>Share link</h1>
+            <p>Share this link with your friend to play together:</p>
+            <code>{`${gameURL}`}</code>
+          </Grid>
+          <Grid item xs={ 12 }>
+            <Grid container>
+              {
+                navigator.clipboard && (
+                  <Grid item xs={ 6 }>
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      onClick={ handleOnClickCopyToClipboard }
+                      size="large"
+                      startIcon={copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> : copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />}
+                    >
+                      Copy<Hidden xsDown> to cliboard</Hidden>
+                    </Button>
+                  </Grid>
+                )
+              }
+              {
+                navigator.share && (
+                  <Grid item xs={ 6 }>
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      onClick={ handleOnClickShare }
+                      size="large"
+                      startIcon={<ShareIcon />}
+                    >
+                      Share
+                    </Button>
+                  </Grid>
+                )
+              }
+            </Grid>
+          </Grid>
+          <Grid item xs={ 6 }>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={ onJoinClick }
+              disabled={ loading }
+              size="large"
+              startIcon={ loading && <CircularProgress size={ 16 } /> }
+            >
+              Start<Hidden xsDown> game</Hidden>
+            </Button>
+          </Grid>
+          <Grid item xs={ 6 }>
+            <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+              <Hidden xsDown>Create new game</Hidden>
+              <Hidden smUp>Create</Hidden>
+            </Button>
           </Grid>
         </Grid>
-        <Grid item xs={ 6 }>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={ onJoinClick }
-            disabled={ loading }
-            size="large"
-            startIcon={ loading && <CircularProgress size={ 16 } /> }
-          >
-            Start<Hidden xsDown> game</Hidden>
-          </Button>
-        </Grid>
-        <Grid item xs={ 6 }>
-          <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
-            <Hidden xsDown>Create new game</Hidden>
-            <Hidden smUp>Create</Hidden>
-          </Button>
-        </Grid>
       </Grid>
-    </div>
+    </Grid>
   );
 };
 
