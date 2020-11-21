@@ -9,9 +9,9 @@ import Context from '../context';
 
 const Create = () => {
   const [ text, setText ] = useState('');
-  const { setGameID, setDictionary } = useContext(Context);
+  const { publicURL, setGameID, setDictionary } = useContext(Context);
   const isWindowWorker = Boolean(window.Worker);
-  const dictionary = new Worker("workers/dictionary.js");
+  const dictionary = new Worker(`${publicURL}/workers/dictionary.js`);
 
   const handleOnChangeTextField = ({currentTarget: {value}}) => setText(value)
 

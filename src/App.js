@@ -33,7 +33,12 @@ function App() {
 
   return (
     <Router>
-      <Context.Provider value={{ gameID, setGameID, dictionary, setDictionary, user, setUser }}>
+      <Context.Provider value={{ 
+        publicURL: window.publicURL || '', 
+        gameID, setGameID, 
+        dictionary, setDictionary, 
+        user, setUser 
+      }}>
         <TransportProvider url={WEB_SOCKET_URL}>
           <ThemeProvider theme={theme}>
             <div className="app">
