@@ -25,3 +25,7 @@
   padding: 10px;
   width: 320px;
 }
+
+.multiline-code {
+  word-break: break-all;
+}

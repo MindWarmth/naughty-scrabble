@@ -20,11 +20,12 @@ const Invite = () => {
   const [ copyStatus, setCopyStatus ] = useState(COPY_STATUS.READY);
   const [ loading, setLoading ] = useState(false);
   const { gameID } = useContext(Context);
-  const host = 'http://localhost:3000';
-  const gamePath = `/game/${gameID}`;
-  const gameURL = `${host}/join/${gameID}`;
   const transport = useTransport();
   const history = useHistory();
+
+  const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}/#`;
+  const gameURL = `${baseUrl}/join/${gameID}`;
+  const gamePath = `/game/${gameID}`;
 
   const handleOnClickShare = () => {
     navigator
@@ -62,7 +63,7 @@ const Invite = () => {
   return (
     <div>
       <p>Share this link with your friend to play the SRRRABBBLE:</p>
-      <code>{`${gameURL}`}</code>
+      <code className="multiline-code">{`${gameURL}`}</code>
       {
         navigator.share &&
         <p><IconButton onClick={ handleOnClickShare }><ShareIcon /></IconButton></p>
