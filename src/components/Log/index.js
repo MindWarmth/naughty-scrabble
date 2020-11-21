@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Context from '../../context';
 import { useTransport, TYPE } from '../../helpers/transport-provider';
 
@@ -31,10 +30,10 @@ function Log() {
         case (TYPE.PLAY):
           setLogs(prevLogs => [`Oponent: ${message.data.previousStep.letter}`, ...prevLogs]);
           break;
+        case (TYPE.LEAVE):
+          setLogs(prevLogs => ['Oponent left the game', ...prevLogs]);
+          break;
         default:
-      }
-      if (message.type === TYPE.MESSAGE) {
-        
       }
     });
     setTimeout(() => {

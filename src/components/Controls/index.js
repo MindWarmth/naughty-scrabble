@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,17 +29,6 @@ function Controls() {
     setUser(null);
     history.push('/');
   };
-
-  useEffect(() => {
-    transport.onMessage((message) => {
-      if (message.type === TYPE.LEAVE) {
-        setGameID(null);
-        setDictionary([]);
-        setUser(null);
-        history.push('/');
-      }
-    });
-  }, []);
 
   return (
     <div>

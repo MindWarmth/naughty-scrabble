@@ -72,16 +72,16 @@ const TransportProvider = props => {
         dataChannel = peerConnection.createDataChannel('datachannel', { reliable: false });
   
         dataChannel.onopen = function() {
-          console.log('%cDATACHANNEL: opened', 'color: green');
+          console.log('%cdataChannel: opened', 'color: green');
           setUser(user);
           setDataChannel(dataChannel);
           resolve();
         };
         dataChannel.onclose = function(){
-          console.log('%cDATACHANNEL: closed', 'color: red');
+          console.log('%cdataChannel: closed', 'color: red');
         };
         dataChannel.onerror = function() {
-          console.log('%cDATACHANNEL: error', 'color: red');
+          console.log('%cdataChannel: error', 'color: red');
         };
   
         peerConnection.ondatachannel = function(ev) {
@@ -90,6 +90,12 @@ const TransportProvider = props => {
           };
           ev.channel.onmessage = function(e) {
             setMessage(JSON.parse(e.data));
+          };
+          ev.channel.onclose = () => {
+            console.log('%cpeerConnection channel: closed', 'color: red');
+          };
+          ev.channel.onerror = (error) => {
+            console.log('%cpeerConnection channel: error', 'color: red');
           };
         };
   
@@ -111,7 +117,7 @@ const TransportProvider = props => {
   
         peerConnection.createAnswer(sdpConstraints).then(function(sdp) {
           return peerConnection.setLocalDescription(sdp).then(function() {            
-            sendNegotiation("answer", sdp);
+            sendNegotiation('answer', sdp);
           })
         }, function(err) {
           console.log(err);
@@ -138,7 +144,7 @@ const TransportProvider = props => {
         var sdpConstraints = { offerToReceiveAudio: true, offerToReceiveVideo: false };
         peerConnection.createOffer(sdpConstraints).then(function(sdp) {
           peerConnection.setLocalDescription(sdp);
-          sendNegotiation("offer", sdp);
+          sendNegotiation('offer', sdp);
         }, function(err) {
           console.log(err);
         });
