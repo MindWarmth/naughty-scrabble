@@ -9,14 +9,14 @@ import { useTransport, TYPE } from '../../helpers/transport-provider';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    maxHeight: 120,
+    maxHeight: 124,
     overflow: 'auto',
   },
 }));
 
 function Log() {
   const classes = useStyles();
-  const { user, setOpponent } = useContext(Context);
+  const { user, opponent, setOpponent } = useContext(Context);
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
 
@@ -24,15 +24,15 @@ function Log() {
     transport.onMessage((message) => {
       switch (message.type) {
         case (TYPE.WELCOME): {
-          setLogs(prevLogs => [`Opponent ${message.data.user} joined.`, ...prevLogs]);
+          setLogs(prevLogs => [`Opponent ${message.data.user} joined`, ...prevLogs]);
           setOpponent(message.data.user);
           break;
         }
         case (TYPE.PLAY):
-          setLogs(prevLogs => [`Opponent: ${message.data.previousStep.letter}.`, ...prevLogs]);
+          setLogs(prevLogs => [`${opponent}: ${message.data.previousStep.letter}`, ...prevLogs]);
           break;
         case (TYPE.LEAVE):
-          setLogs(prevLogs => ['Opponent left the game.', ...prevLogs]);
+          setLogs(prevLogs => [`${opponent} left the game`, ...prevLogs]);
           break;
         default:
       }
@@ -49,6 +49,7 @@ function Log() {
     <List
       className={classes.root}
       component="nav"
+      dense
     >
       {logs.map((log, index) => (
         <ListItem key={index}>

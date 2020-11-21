@@ -1,12 +1,13 @@
 import { useContext, useState, useEffect } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
+import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
-import Controls from '../components/Controls';
 import Context from '../context';
 import { useTransport, TYPE } from '../helpers/transport-provider';
 
@@ -14,7 +15,7 @@ const SIZE = 10;
 
 const Game = () => {
   const params = useParams();
-  const { gameID, dictionary, setDictionary, user, publicURL } = useContext(Context);
+  const { gameID, setGameID, dictionary, setDictionary, user, setUser, publicURL, setOpponent } = useContext(Context);
   const [ fieldsData, setFieldsData ] = useState(
     new Array(SIZE).fill(
       new Array(SIZE).fill(null)
@@ -23,6 +24,7 @@ const Game = () => {
   const [ canPlay, setCanPlay ] = useState(true)
   const transport = useTransport();
   const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
+  const history = useHistory();
 
   useEffect(() => {
     transport.onMessage(({ type, data }) => {
@@ -72,6 +74,17 @@ const Game = () => {
     });
   }
 
+  const handleLeaveClick = () => {
+    transport.sendMessage({
+      type: TYPE.LEAVE,
+    });
+    setGameID(null);
+    setDictionary([]);
+    setUser(null);
+    setOpponent(null);
+    history.push('/');
+  };
+
   chunksWorker.onmessage = ({ data }) => {
     console.log('Chunks recived', data);
   }
@@ -88,7 +101,16 @@ const Game = () => {
       <Grid item xs={ 12 } sm={ 6 } md={ 4 }>
         <Grid container direction="column" alignItems="stretch">
           <Grid item xs={ 12 }>
-            <p>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</p>
+            <Grid container justify="space-between" alignItems="center">
+              <Grid item>
+                { canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }
+              </Grid>
+              <Grid item>
+              <IconButton aria-label="Leave" component="span" size="small" onClick={ handleLeaveClick }>
+                <ExitToAppIcon />
+              </IconButton>
+              </Grid>
+            </Grid>
           </Grid>
           <Hidden xsDown>
             <Grid item xs={ 12 }>
@@ -97,9 +119,6 @@ const Game = () => {
           </Hidden>
           <Grid item xs={ 12 }>
             <Scoreboard />
-          </Grid>
-          <Grid item xs={ 12 }>
-            <Controls />
           </Grid>
         </Grid>
       </Grid>
