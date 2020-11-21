@@ -3,7 +3,7 @@ import Context from '../context';
 
 export const TYPE = {
   DICTIONARY: 'dictionary',
-  MESSAGE: 'message',
+  WELCOME: 'welcome',
   PLAY: 'play',
   LEAVE: 'LEAVE',
 };
@@ -17,12 +17,10 @@ const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeer
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 const config = { "iceServers": [ { "urls":"stun:stun.l.google.com:19302" } ] };
 const connection = {};
-const DEFAULT_NAME = 'Alice';
+const DEFAULT_USERNAME = 'Alice';
 
 const TransportProvider = props => {  
-  const {
-    setUser
-  } = useContext(Context);
+  const { user, setUser } = useContext(Context);
   const [ dataChannel, setDataChannel ] = useState();
   const [ messageHandlers, setMessageHandlers ] = useState([]);
   const [ message, setMessage ] = useState();
@@ -59,7 +57,14 @@ const TransportProvider = props => {
       var ws = null;
       var peerConnection;
       var dataChannel;
-      var user = `${DEFAULT_NAME}_${Math.floor(Math.random() * 10000)}`;
+      var username;
+      
+      if (!user) {
+        username = `${DEFAULT_USERNAME}_${Math.floor(Math.random() * 1000000)}`;
+        setUser(username);
+      } else {
+        username = user;
+      }
   
       function openDataChannel() {
         peerConnection = new crossBrowserPeerConnection(config, connection);
@@ -73,7 +78,6 @@ const TransportProvider = props => {
   
         dataChannel.onopen = function() {
           console.log('%cdataChannel: opened', 'color: green');
-          setUser(user);
           setDataChannel(dataChannel);
           resolve();
         };
@@ -103,7 +107,7 @@ const TransportProvider = props => {
       }
   
       function sendNegotiation(type, sdp) {
-        var json = { from: user, gameID: gameID, action: type, data: sdp };
+        var json = { from: username, gameID: gameID, action: type, data: sdp };
         ws.send(JSON.stringify(json));
       }
   
@@ -157,7 +161,7 @@ const TransportProvider = props => {
       };
       ws.onmessage = function(e) {
         var json = JSON.parse(e.data);
-        if (json.gameID === gameID && json.from !== user) {
+        if (json.gameID === gameID && json.from !== username) {
           if (json.action === 'candidate') {
             processIce(json.data);
           } else if (json.action === 'offer') {

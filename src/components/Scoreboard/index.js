@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Context from '../../context';
 
 const useStyles = makeStyles({
   table: {
@@ -16,22 +17,23 @@ const useStyles = makeStyles({
 
 function Scoreboard() {
   const classes = useStyles();
+  const { user, opponent } = useContext(Context);
 
   return (
     <TableContainer component={Paper} className={classes.table}>
       <Table size="small">
         <TableBody>
           <TableRow>
-            <TableCell component="th" scope="row">
-              Player #1 score:
+            <TableCell scope="row">
+              <strong>{user} score:</strong>
             </TableCell>
             <TableCell align="right">
-              47
+              <strong>47</strong>
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell component="th" scope="row">
-              Player #2 score:
+            <TableCell scope="row">
+              {opponent} score:
             </TableCell>
             <TableCell align="right">
               54

@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Hidden from '@material-ui/core/Hidden';
+import TextField from '@material-ui/core/TextField';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -11,9 +12,12 @@ const Join = () => {
   const [ loading, setLoading ] = useState(false);
   const history = useHistory();
   const { gameID } = useParams();
-  const { setGameID } = useContext(Context);
+  const { setGameID, setUser } = useContext(Context);
   const gamePath = `/game/${gameID}`;
   const transport = useTransport();
+  const [ username, setUsername ] = useState('');
+
+  const handleOnChangeUsernameField = ({ currentTarget: { value } }) => setUsername(value);
 
   const onJoinClick = () => {
     setLoading(true);
@@ -23,6 +27,10 @@ const Join = () => {
       setLoading(false);
     });
   }
+
+  useEffect(() => {
+    setUser(username);
+  }, [ username ]);
 
   useEffect(() => {
     setGameID(gameID);
@@ -35,6 +43,17 @@ const Join = () => {
           <Grid item xs={ 12 }>
             <h1>Join to the game</h1>
             <code>Game ID: {gameID}</code>
+          </Grid>
+          <Grid item xs={ 12 }>
+            <TextField
+              label="Username"
+              placeholder="Put your username here"
+              fullWidth
+              variant="outlined"
+              value={ username }
+              required={ false }
+              onChange={ handleOnChangeUsernameField }
+            />
           </Grid>
           <Grid item xs={ 6 }>
             <Button

@@ -16,30 +16,31 @@ const useStyles = makeStyles((theme) => ({
 
 function Log() {
   const classes = useStyles();
-  const { user } = useContext(Context);
+  const { user, setOpponent } = useContext(Context);
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
 
   useEffect(() => {
     transport.onMessage((message) => {
       switch (message.type) {
-        case (TYPE.MESSAGE): {
-          setLogs(prevLogs => [message.data, ...prevLogs]);
+        case (TYPE.WELCOME): {
+          setLogs(prevLogs => [`Opponent ${message.data.user} joined.`, ...prevLogs]);
+          setOpponent(message.data.user);
           break;
         }
         case (TYPE.PLAY):
-          setLogs(prevLogs => [`Oponent: ${message.data.previousStep.letter}`, ...prevLogs]);
+          setLogs(prevLogs => [`Opponent: ${message.data.previousStep.letter}.`, ...prevLogs]);
           break;
         case (TYPE.LEAVE):
-          setLogs(prevLogs => ['Oponent left the game', ...prevLogs]);
+          setLogs(prevLogs => ['Opponent left the game.', ...prevLogs]);
           break;
         default:
       }
     });
     setTimeout(() => {
       transport.sendMessage({
-        type: TYPE.MESSAGE,
-        data: `${user} joined`,
+        type: TYPE.WELCOME,
+        data: { user },
       });
     }, 1000);
   }, []);

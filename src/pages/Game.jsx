@@ -87,7 +87,7 @@ const Game = () => {
         </Grid>
       </Grid>
       {
-        dictionary && dictionary.length && (
+        dictionary && dictionary.length > 0 && (
           <Grid item xs={ 12 } md={ 10 }>
             <code>{ dictionary.map((word) => `${word}, `) }</code>
           </Grid>

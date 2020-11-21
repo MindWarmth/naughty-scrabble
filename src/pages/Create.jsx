@@ -6,15 +6,26 @@ import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import { makeStyles } from '@material-ui/core/styles';
 import Context from '../context';
 
+const useStyles = makeStyles({
+  formEl: {
+    marginTop: 16,
+  },
+});
+
 const Create = () => {
+  const classes = useStyles();
   const [ text, setText ] = useState('');
-  const { publicURL, setGameID, setDictionary } = useContext(Context);
+  const [ username, setUsername ] = useState('');
+  const { setUser, publicURL, setGameID, setDictionary } = useContext(Context);
   const isWindowWorker = Boolean(window.Worker);
   const dictionary = new Worker(`${publicURL}/workers/dictionary.js`);
 
-  const handleOnChangeTextField = ({currentTarget: {value}}) => setText(value)
+  const handleOnChangeTextField = ({ currentTarget: { value } }) => setText(value);
+
+  const handleOnChangeUsernameField = ({ currentTarget: { value } }) => setUsername(value);
 
   const handleOnClickPasteFromClipBoard = async () => {
     try {
@@ -27,6 +38,9 @@ const Create = () => {
 
   const handleOnClickProceed = () => { 
     setGameID(nanoid());
+    if (username) {
+      setUser(username);
+    }
     if (isWindowWorker) {
       dictionary.postMessage(text);
       dictionary.onmessage = function({ data }) {
@@ -42,22 +56,32 @@ const Create = () => {
           <Grid item xs={ 12 }>
             <h1>Create a new game</h1>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid item xs={ 12 }>
+            <TextField
+              label="Username"
+              placeholder="Put your username here"
+              fullWidth
+              variant="outlined"
+              value={ username }
+              required={ false }
+              onChange={ handleOnChangeUsernameField }
+            />
             <TextField
               label="Insert text which will be used as dictionary"
-              placeholder="Put you text here"
+              placeholder="Put text here"
+              className={classes.formEl}
               multiline
               rows={ 4 }
               fullWidth
               variant="outlined"
               value={ text }
+              required
               onChange={ handleOnChangeTextField }
             />
-          </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
             <Button
               variant="contained"
               color="secondary"
+              className={classes.formEl}
               startIcon={<AssignmentIcon />}
               onClick={ handleOnClickPasteFromClipBoard }
             >
