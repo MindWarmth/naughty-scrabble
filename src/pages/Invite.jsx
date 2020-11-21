@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +8,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import Context from '../context';
+import { useTransport } from '../helpers/transport-provider';
 
 const COPY_STATUS = {
   READY: 'ready',
@@ -20,6 +22,8 @@ const Invite = () => {
   const host = 'http://localhost:3000';
   const gamePath = `/game/${gameID}`;
   const gameURL = `${host}${gamePath}`;
+  const transport = useTransport();
+  const history = useHistory();
 
   const handleOnClickShare = () => {
     navigator
@@ -37,9 +41,15 @@ const Invite = () => {
       .then(() => setCopyStatus(COPY_STATUS.SUCCESS))
       .catch(() => setCopyStatus(COPY_STATUS.FAILURE));
   
+  const onGoClick = () => {
+    transport.open(gameID).then(() => {
+      history.push(gamePath);
+    });
+  }
+  
   return (
     <div>
-      <p>Share this link with your friend to play the SRRRABBBLE</p>
+      <p>Share this link with your friend to play the SRRRABBBLE:</p>
       <code>{`${gameURL}`}</code>
       {
         navigator.share &&
@@ -55,7 +65,7 @@ const Invite = () => {
         </IconButton></p>
       }
       <p>
-        <Button component={ Link } to={ gamePath } color="primary" variant="contained">Go to the game</Button>
+        <Button color="primary" variant="contained" onClick={onGoClick}>Go to the game</Button>
       </p>
     </div>
   );

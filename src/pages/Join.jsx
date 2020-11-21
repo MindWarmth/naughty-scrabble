@@ -7,8 +7,8 @@ const Join = () => {
   const { gameID } = useParams();
   const transport = useTransport()
 
-  function onJoinClick() {
-    transport.open(gameID).then(() => {
+  const onJoinClick = () => {
+    transport.join(gameID).then(() => {
       history.push(`/game/${gameID}`);
     });
   }
@@ -18,9 +18,7 @@ const Join = () => {
       <h1>Join to the SRRRABBBLE</h1>
       <code>Game ID: {gameID}</code>
       <p>
-        <Button variant="contained" color="primary" onClick={onJoinClick}>
-          Join
-        </Button>
+        <Button variant="contained" color="primary" onClick={onJoinClick}>Join</Button>
       </p>
     </div>
   );

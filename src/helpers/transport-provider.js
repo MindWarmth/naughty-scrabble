@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 
-const TransportContext = createContext({ user: null, open: () => {} });
+const TransportContext = createContext({ open: () => {}, join: () => {} });
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
@@ -9,7 +9,9 @@ const DEFAULT_NAME = 'Alice';
 
 const TransportProvider = props => {  
   const transport = {
+    // TODO rework, these methods should be different
     open: (gameID) => openConnection(gameID),
+    join: (gameID) => openConnection(gameID),
   };
 
   function openConnection(gameID) {
