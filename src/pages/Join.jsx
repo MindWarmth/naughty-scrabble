@@ -26,7 +26,9 @@ const Join = () => {
       <h1>Join to the SRRRABBBLE</h1>
       <code>Game ID: {gameID}</code>
       <p>
-        <Button variant="contained" color="primary" onClick={onJoinClick} disabled={loading}>Join</Button>
+        <Button variant="contained" color="primary" onClick={onJoinClick} size="large" disabled={loading}>
+          Join
+        </Button>
       </p>
       {loading && <>Joining: <CircularProgress size={24} /></>}
     </div>

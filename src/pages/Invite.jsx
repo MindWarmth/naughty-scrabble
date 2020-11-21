@@ -78,7 +78,9 @@ const Invite = () => {
         </IconButton></p>
       }
       <p>
-        <Button color="primary" variant="contained" onClick={onGoClick} disabled={loading}>Proceed to game</Button>
+        <Button color="primary" variant="contained" onClick={onGoClick} disabled={loading} size="large">
+          Proceed to game
+        </Button>
       </p>
       {loading && <>Waiting for peer: <CircularProgress size={24} /></>}
     </div>
