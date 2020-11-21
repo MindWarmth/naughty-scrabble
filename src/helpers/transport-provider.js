@@ -4,6 +4,7 @@ import Context from '../context';
 export const TYPE = {
   DICTIONARY: 'dictionary',
   MESSAGE: 'message',
+  PLAY: 'play'
 };
 
 const TransportContext = createContext({

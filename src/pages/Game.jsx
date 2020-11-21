@@ -16,17 +16,26 @@ const Game = () => {
   const transport = useTransport();
 
   useEffect(() => {
-    transport.onMessage((message) => {
-      if (message.type === TYPE.DICTIONARY) {
-        setDictionary(message.data);
+    transport.onMessage(({ type, data }) => {
+      switch (type) {
+        case TYPE.DICTIONARY:
+          setDictionary(data)
+          break;
+        case TYPE.PLAY:
+          setCanPlay(true);
+          setFieldsData(data.fieldsData);
+          break;      
+        default:
+          break;
       }
     });
+
     if (dictionary) {
       transport.sendMessage({
         type: TYPE.DICTIONARY,
         data: dictionary,
       });
-    }
+    };
   }, []);
 
   if (!gameID && params.gameID) {
@@ -34,8 +43,19 @@ const Game = () => {
   }
 
   const handleOnBoardChange = ({ row, col, letter }) => {
+    const newFieldsData = set(`${row}.${col}`, letter, fieldsData);
+    
     setCanPlay(false);
-    setFieldsData(set(`${row}.${col}`, letter, fieldsData));
+    setFieldsData(newFieldsData);
+
+    transport.sendMessage({
+      type: TYPE.PLAY,
+      data: {
+        previousStep: { row, col, letter },
+        fieldsData: newFieldsData
+      }
+    })
+
   }
 
   return (
