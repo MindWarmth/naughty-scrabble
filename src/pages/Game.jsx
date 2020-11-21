@@ -60,10 +60,10 @@ const Game = () => {
 
   return (
     <div>
-      <h1 className="title">Game ID: <code>{gameID}</code>, user: <code>{user}</code></h1>
-      <div className="game">
+      <h1>Game ID: <code>{gameID}</code>, user: <code>{user}</code></h1>
+      <div>
         <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
-        <div className="sidebar">
+        <div>
           <Log />
           <Scoreboard />
           <Controls />

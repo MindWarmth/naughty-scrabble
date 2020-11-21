@@ -1,27 +1,3 @@
-.app {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
-.title {
-  font-size: medium;
-  text-align: center;
-}
-
-.game {
-  display: flex;
-}
-
-.sidebar {
-  align-content: stretch;
-  display: flex;
-  flex-direction: column;
-  height: 440px;
-  padding: 10px;
-  width: 320px;
-}
-
-.multiline-code {
-  word-break: break-all;
+h1 {
+  font-size: 1.5em;
 }

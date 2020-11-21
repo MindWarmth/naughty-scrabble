@@ -6,7 +6,6 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import { makeStyles } from '@material-ui/core/styles';
 import Context from '../../context';
 import { useTransport, TYPE } from '../../helpers/transport-provider';
-import './Controls.css';
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -43,7 +42,7 @@ function Controls() {
   }, []);
 
   return (
-    <div className="controls">
+    <div>
       <Button variant="contained" size="small" color="primary" className={classes.btn}>
         Submit
       </Button>

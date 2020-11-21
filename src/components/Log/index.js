@@ -6,7 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Context from '../../context';
 import { useTransport, TYPE } from '../../helpers/transport-provider';
-import './Log.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,24 +44,22 @@ function Log() {
   }, []);
 
   return (
-    <div className="log">
-      <List
-        className={classes.root}
-        component="nav"
-        aria-label="main mailbox folders"
-        subheader={
-          <ListSubheader component="div">
-            Logs:
-          </ListSubheader>
-        }
-      >
-        {logs.map((log, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={log} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+    <List
+      className={classes.root}
+      component="nav"
+      aria-label="main mailbox folders"
+      subheader={
+        <ListSubheader component="div">
+          Logs:
+        </ListSubheader>
+      }
+    >
+      {logs.map((log, index) => (
+        <ListItem key={index}>
+          <ListItemText primary={log} />
+        </ListItem>
+      ))}
+    </List>
   );
 }
 

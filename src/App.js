@@ -41,31 +41,29 @@ function App() {
       }}>
         <TransportProvider url={WEB_SOCKET_URL}>
           <ThemeProvider theme={theme}>
-            <div className="app">
-              <Switch>
+            <Switch>
 
-                <Route path="/create">
-                  <Create />
-                </Route>
+              <Route path="/create">
+                <Create />
+              </Route>
 
-                <Route path="/invite">
-                  <Invite />
-                </Route>
+              <Route path="/invite">
+                <Invite />
+              </Route>
 
-                <Route path="/join/:gameID">
-                  <Join />
-                </Route>
+              <Route path="/join/:gameID">
+                <Join />
+              </Route>
 
-                <Route path="/game/:gameID">
-                  <Game />
-                </Route>
-              
-                <Route path="/">
-                  <Welcome />
-                </Route>
+              <Route path="/game/:gameID">
+                <Game />
+              </Route>
+            
+              <Route path="/">
+                <Welcome />
+              </Route>
 
-              </Switch>        
-            </div>
+            </Switch>
           </ThemeProvider>
         </TransportProvider>
       </Context.Provider>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Context from '../context';
@@ -28,14 +29,29 @@ const Join = () => {
 
   return (
     <div>
-      <h1>Join to the SRRRABBBLE</h1>
-      <code>Game ID: {gameID}</code>
-      <p>
-        <Button variant="contained" color="primary" onClick={onJoinClick} size="large" disabled={loading}>
-          Join
-        </Button>
-      </p>
-      {loading && <>Joining: <CircularProgress size={24} /></>}
+      <h1>Join to the game</h1>
+      <Grid container spacing={ 3 }>
+        <Grid item xs={ 12 }>
+          <code>Game ID: {gameID}</code>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={ onJoinClick }
+            size="large"
+            disabled={ loading }
+            startIcon={ loading && <CircularProgress size={ 16 } /> }
+          >
+            Join game
+          </Button>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+            Create new game
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 }

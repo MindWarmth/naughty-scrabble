@@ -36,11 +36,11 @@ const Create = () => {
 
   return (
     <div>
-      <h1>Create new game</h1>
+      <h1>Create a new game</h1>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 6 }>
           <TextField
-            label="Text"
+            label="Insert text which will be used as dictionary"
             placeholder="Put you text here"
             multiline
             rows={ 4 }
@@ -63,7 +63,7 @@ const Create = () => {
         <Grid item xs={ 12 }>
           <Button component={ Link } disabled={!text} onClick={ handleOnClickProceed } to="/invite" color="primary" variant="contained" size="large">
             Proceed
-            </Button>
+          </Button>
         </Grid>
       </Grid>
     </div>

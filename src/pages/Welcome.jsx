@@ -6,7 +6,7 @@ const Welcome = () => (
     <h1>Welcome to Naughty Scrabble!</h1>
     <p>Press the button below to create a new game.</p>
     <Button component={ Link } to="/create" color="primary" variant="contained" size="large">
-      New game
+      Create new game
     </Button>
     <p>To join an existed game you need a link.</p>
   </div>

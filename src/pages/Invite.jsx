@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -50,7 +50,7 @@ const Invite = () => {
     }
   }
   
-  const onGoClick = () => {
+  const onJoinClick = () => {
     setLoading(true);
     transport.open(gameID).then(() => {
       history.push(gamePath);
@@ -61,27 +61,64 @@ const Invite = () => {
   
   return (
     <div>
-      <p>Share this link with your friend to play the SRRRABBBLE:</p>
-      <code className="multiline-code">{`${gameURL}`}</code>
-      {
-        navigator.share &&
-        <p><IconButton onClick={ handleOnClickShare }><ShareIcon /></IconButton></p>
-      }
-      {
-        navigator.clipboard && 
-        <p><IconButton onClick={ handleOnClickCopyToClipboard } aria-label="paste from clipboard" component="span" >
-          {
-            copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> :
-            copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />
-          }
-        </IconButton></p>
-      }
-      <p>
-        <Button color="primary" variant="contained" onClick={onGoClick} disabled={loading} size="large">
-          Proceed to game
-        </Button>
-      </p>
-      {loading && <>Waiting for peer: <CircularProgress size={24} /></>}
+      <h1>Share link</h1>
+      <p>Share this link with your friend to play together:</p>
+      <Grid container spacing={ 3 }>
+        <Grid item xs={ 12 }>
+          <code>{`${gameURL}`}</code>
+        </Grid>
+        <Grid item xs={ 12 }>
+          <Grid container>
+            {
+              navigator.clipboard && (
+                <Grid item xs={ 6 }>
+                  <Button
+                    color="secondary"
+                    variant="outlined"
+                    onClick={ handleOnClickCopyToClipboard }
+                    size="large"
+                    startIcon={copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> : copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />}
+                  >
+                    Copy to cliboard
+                  </Button>
+                </Grid>
+              )
+            }
+            {
+              navigator.share && (
+                <Grid item xs={ 6 }>
+                  <Button
+                    color="secondary"
+                    variant="outlined"
+                    onClick={ handleOnClickShare }
+                    size="large"
+                    startIcon={<ShareIcon />}
+                  >
+                    Share
+                  </Button>
+                </Grid>
+              )
+            }
+          </Grid>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={ onJoinClick }
+            disabled={ loading }
+            size="large"
+            startIcon={ loading && <CircularProgress size={ 16 } /> }
+          >
+            Join game
+          </Button>
+        </Grid>
+        <Grid item xs={ 6 }>
+          <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+            Create new game
+          </Button>
+        </Grid>
+      </Grid>
     </div>
   );
 };
