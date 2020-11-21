@@ -9,7 +9,7 @@ const Join = () => {
   const history = useHistory();
   const { gameID } = useParams();
   const gamePath = `/game/${gameID}`;
-  const transport = useTransport()
+  const transport = useTransport();
 
   const onJoinClick = () => {
     setLoading(true);

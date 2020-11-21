@@ -1,6 +1,11 @@
-import React, { useContext, createContext } from 'react';
+import React, { useContext, createContext, useState } from 'react';
 
-const TransportContext = createContext({ open: () => {} });
+const TransportContext = createContext({
+  open: () => {},
+  onMessage: () => {},
+  sendMessage: () => {},
+  user: '',
+});
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
@@ -8,9 +13,32 @@ const connection = {};
 const DEFAULT_NAME = 'Alice';
 
 const TransportProvider = props => {  
+  const [ user, setUser ] = useState(null);
+  const [ dataChan, setDataChan ] = useState();
+  const [ chan, setChan ] = useState();
   const transport = {
     open: (gameID) => open(gameID),
+    onMessage: (fn) => onMessage(fn),
+    sendMessage: (message) => sendMessage(message),
+    user,
   };
+
+  function onMessage(fn) {
+    if (chan) {
+      chan.onmessage = function(e) {
+        console.log(`%cMessage received:\n${e.data}`, 'font-weight: bold');
+        if (fn) {
+          fn(e.data);
+        }
+      };
+    }
+  }
+
+  function sendMessage(message) {
+    if (dataChan) {
+      dataChan.send(message);
+    }
+  }
 
   function open(gameID) {
     return new Promise((resolve, reject) => {
@@ -31,9 +59,12 @@ const TransportProvider = props => {
   
         dataChannel.onopen = function() {
           console.log('%cDATACHANNEL OPENED', 'color: green');
-          // TODO for demo purpose
-          dataChannel.send(`Hello from ${user}!`);
-          resolve();
+          setUser(user);
+          setDataChan(dataChannel);
+          // dirty hack to prevent case when ${user} and ${dataChan} props are not ready in Promise callback execution stream
+          setTimeout(() => {
+            resolve();
+          }, 500);          
         };
         dataChannel.onclose = function(){
           console.log('%cDATACHANNEL CLOSED', 'color: red');
@@ -45,10 +76,7 @@ const TransportProvider = props => {
         peerConnection.ondatachannel = function(ev) {
           ev.channel.onopen = function() {
             // Data channel is open and ready to be used
-          };
-          ev.channel.onmessage = function(e) {
-            // TODO for demo purpose
-            console.log(`%cMessage received:\n${e.data}`, 'font-weight: bold');
+            setChan(ev.channel);
           };
         };
   

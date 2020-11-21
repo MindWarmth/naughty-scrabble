@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import { useTransport } from '../../helpers/transport-provider';
 import './Log.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,6 +15,19 @@ const useStyles = makeStyles((theme) => ({
 
 function Log() {
   const classes = useStyles();
+  const transport = useTransport();
+  const [ logs, setLogs ] = useState([]);
+
+  const handleMessage = (message) => {
+    setLogs([message].concat(logs.map((x) => x)));
+  }
+
+  useEffect(() => {
+    transport.onMessage(handleMessage);
+    setTimeout(() => {
+      transport.sendMessage(`${transport.user} joined`);
+    }, 1000)
+  }, []);
 
   return (
     <div className="log">
@@ -23,28 +37,15 @@ function Log() {
         aria-label="main mailbox folders"
         subheader={
           <ListSubheader component="div">
-            Latest words
+            Logs:
           </ListSubheader>
         }
       >
-        <ListItem>
-          <ListItemText primary="tree" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="awesome" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="yes" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="space" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="naughty" />
-        </ListItem>
-        <ListItem>
-          <ListItemText primary="scramble" />
-        </ListItem>
+        {logs.map((log, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={log} />
+          </ListItem>
+        ))}
       </List>
     </div>
   );
