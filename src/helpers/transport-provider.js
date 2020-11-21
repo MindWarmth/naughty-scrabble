@@ -45,7 +45,6 @@ const TransportProvider = props => {
   };
 
   function onMessage(fn) {
-    console.log('messageHandlers', messageHandlers);
     setMessageHandlers(prevMessageHandlers => [...prevMessageHandlers, fn]);
   }
 
@@ -73,16 +72,16 @@ const TransportProvider = props => {
         dataChannel = peerConnection.createDataChannel('datachannel', { reliable: false });
   
         dataChannel.onopen = function() {
-          console.log('%cDATACHANNEL OPENED', 'color: green');
+          console.log('%cDATACHANNEL: opened', 'color: green');
           setUser(user);
           setDataChannel(dataChannel);
           resolve();
         };
         dataChannel.onclose = function(){
-          console.log('%cDATACHANNEL CLOSED', 'color: red');
+          console.log('%cDATACHANNEL: closed', 'color: red');
         };
         dataChannel.onerror = function() {
-          console.log('%cDATACHANNEL ERROR', 'color: red');
+          console.log('%cDATACHANNEL: error', 'color: red');
         };
   
         peerConnection.ondatachannel = function(ev) {
@@ -132,7 +131,7 @@ const TransportProvider = props => {
   
       ws = new WebSocket(props.url);
       ws.onopen = function(e) {    
-        console.log('%cWebsocket opened', 'color: gray');
+        console.log('%cWebsocket: opened', 'color: gray');
         
         openDataChannel();
   
@@ -145,10 +144,10 @@ const TransportProvider = props => {
         });
       };
       ws.onclose = function(e) {   
-        console.log('%cWebsocket closed', 'color: gray');
+        console.log('%cWebsocket: closed', 'color: gray');
       };
       ws.onerror = function(e) {   
-        console.log('%cWebsocket error', 'color: red');
+        console.log('%cWebsocket: error', 'color: red');
       };
       ws.onmessage = function(e) {
         var json = JSON.parse(e.data);

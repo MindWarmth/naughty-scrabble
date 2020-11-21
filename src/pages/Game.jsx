@@ -63,7 +63,7 @@ const Game = () => {
     <div>
       <h1>Game ID: <code>{gameID}</code></h1>
       <p>user: <code>{user}</code></p>
-      <Grid container spacing={ 3 }>
+      <Grid container direction="row" alignItems="center" spacing={ 3 }>
         <Grid item xs={ 12 } sm={ 8 }>
           <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
         </Grid>
