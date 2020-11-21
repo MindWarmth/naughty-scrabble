@@ -9,7 +9,7 @@ import Context from '../context';
 
 const Game = () => {
   const params = useParams();
-  const { gameID = 'test', dictionary } = useContext(Context);
+  const { gameID, dictionary } = useContext(Context);
   const [ fieldsData, setFieldsData ] = useState({});
   const [ canPlay, setCanPlay ] = useState(true)
 
