@@ -28,7 +28,7 @@ function Board({ fieldsData, onChange, canPlay }) {
               const value = get(`${rowIndex}.${colIndex}`, fieldsData);
               return (
                 <div className="board__col" key={`col-${colIndex}`}>
-                  { canPlay && value === ' ' ? 
+                  { canPlay && !value ? 
                     <input className="board__cell" value='' onChange={handleOnFieldChange(rowIndex, colIndex)} /> :
                     <div className="board__cell">{ value }</div>
                   }

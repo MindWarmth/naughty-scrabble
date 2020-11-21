@@ -17,7 +17,7 @@ const Game = () => {
   const { gameID, dictionary, setDictionary, user, publicURL } = useContext(Context);
   const [ fieldsData, setFieldsData ] = useState(
     new Array(SIZE).fill(
-      new Array(SIZE).fill(' ')
+      new Array(SIZE).fill(null)
     )
   );
   const [ canPlay, setCanPlay ] = useState(true)
