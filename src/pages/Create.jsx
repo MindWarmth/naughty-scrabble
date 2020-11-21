@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
+import { nanoid } from 'nanoid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Context from '../context';
 
 const Create = () => {
   const [ text, setText ] = useState('');
+  const { setGameID } = useContext(Context);
 
   const handleOnChangeTextField = (ev) => {
     console.log(ev);
@@ -17,6 +20,8 @@ const Create = () => {
       setText(text);
     }).catch((err) => console.log(err));
   }
+
+  const handleOnClickProceed = () => setGameID(nanoid());
 
   return (
     <div>
@@ -39,7 +44,7 @@ const Create = () => {
           <AssignmentIcon />
         </IconButton>
       </div>
-      <Button component={ Link } to="/invite" color="primary" variant="contained">Proceed</Button>
+      <Button component={ Link } onClick={ handleOnClickProceed } to="/invite" color="primary" variant="contained">Proceed</Button>
     </div>
   );
 }

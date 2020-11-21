@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { nanoid } from 'nanoid';
+import { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
+import Context from '../context';
 
 const COPY_STATUS = {
   READY: 'ready',
@@ -14,10 +14,9 @@ const COPY_STATUS = {
   FAILURE: 'failure'
 }
 
-const gameID = nanoid();
-
 const Invite = () => {
   const [ copyStatus, setCopyStatus ] = useState(COPY_STATUS.READY);
+  const { gameID } = useContext(Context);
   const host = 'http://localhost:3000';
   const gamePath = `/game/${gameID}`;
   const gameURL = `${host}${gamePath}`;

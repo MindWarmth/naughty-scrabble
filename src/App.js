@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Context from './context';
 import Welcome from './pages/Welcome';
 import Create from './pages/Create';
 import Invite from './pages/Invite';
@@ -24,6 +25,9 @@ function App() {
       },
     }
   });
+
+  const [ gameID, setGameID ] = useState();
+
   const WEB_SOCKET_URL = 'ws://88.99.175.232:8054';
   const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
   const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
@@ -157,33 +161,35 @@ function App() {
 
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <div className="app">
-          <Switch>
+      <Context.Provider value={{ gameID, setGameID }}>
+        <ThemeProvider theme={theme}>
+          <div className="app">
+            <Switch>
 
-            <Route path="/create">
-              <Create />
-            </Route>
+              <Route path="/create">
+                <Create />
+              </Route>
 
-            <Route path="/invite">
-              <Invite />
-            </Route>
+              <Route path="/invite">
+                <Invite />
+              </Route>
 
-            <Route path="/join/:gameID">
-              <Join />
-            </Route>
+              <Route path="/join/:gameID">
+                <Join />
+              </Route>
 
-            <Route path="/game/:gameID">
-              <Game />
-            </Route>
-          
-            <Route path="/">
-              <Welcome />
-            </Route>
+              <Route path="/game/:gameID">
+                <Game />
+              </Route>
+            
+              <Route path="/">
+                <Welcome />
+              </Route>
 
-          </Switch>        
-        </div>
-      </ThemeProvider>
+            </Switch>        
+          </div>
+        </ThemeProvider>
+      </Context.Provider>
     </Router>
   );
 }
