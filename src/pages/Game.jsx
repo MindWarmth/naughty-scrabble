@@ -1,5 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
+import set from 'lodash/fp/set';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
@@ -9,7 +10,9 @@ import { useTransport, TYPE } from '../helpers/transport-provider';
 
 const Game = () => {
   const params = useParams();
-  const { gameID, dictionary, setDictionary, user } = useContext(Context);
+  const { gameID = 'test', dictionary, setDictionary, user } = useContext(Context);
+  const [ fieldsData, setFieldsData ] = useState({});
+  const [ canPlay, setCanPlay ] = useState(true)
   const transport = useTransport();
 
   useEffect(() => {
@@ -30,12 +33,17 @@ const Game = () => {
     return <Redirect to={`/join/${params.gameID}`} />
   }
 
+  const handleOnBoardChange = ({ row, col, letter }) => {
+    setCanPlay(false);
+    setFieldsData(set(`${row}.${col}`, letter, fieldsData));
+  }
+
   return (
     <div>
       <h1 className="title">Game ID: <code>{gameID}</code>, user: <code>{user}</code></h1>
       <div className="game">
         <div className="main">
-          <Board />
+          <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
         </div>
         <div className="sidebar">
           <Log />
