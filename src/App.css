@@ -13,10 +13,6 @@
   display: flex;
 }
 
-.main {
-  width: 440px;
-}
-
 .sidebar {
   align-content: stretch;
   display: flex;
