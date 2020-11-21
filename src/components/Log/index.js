@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Context from '../../context';
 import { useTransport, TYPE } from '../../helpers/transport-provider';
 import './Log.css';
 
@@ -15,12 +16,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Log() {
   const classes = useStyles();
+  const { user } = useContext(Context);
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
 
   const handleMessage = (message) => {
     if (message.type === TYPE.MESSAGE) {
-      setLogs([message.data].concat(logs.map((x) => x)));
+      setLogs(prevLogs => [message.data, ...prevLogs]);
     }
   }
 
@@ -29,7 +31,7 @@ function Log() {
     setTimeout(() => {
       transport.sendMessage({
         type: TYPE.MESSAGE,
-        data: `${transport.user} joined`,
+        data: `${user} joined`,
       });
     }, 1000)
   }, []);

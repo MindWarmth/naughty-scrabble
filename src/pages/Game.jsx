@@ -9,11 +9,11 @@ import { useTransport, TYPE } from '../helpers/transport-provider';
 
 const Game = () => {
   const { gameID } = useParams();
-  const { vocabulary, setVocabulary } = useContext(Context);
+  const { vocabulary, setVocabulary, user } = useContext(Context);
   const transport = useTransport();
 
   const handleMessage = (message) => {
-    if (message.type === TYPE.VOCABULARY && !vocabulary) {
+    if (message.type === TYPE.VOCABULARY) {
       setVocabulary(message.data);
     }
   }
@@ -30,7 +30,7 @@ const Game = () => {
 
   return (
     <div>
-      <h1 className="title">Game ID: {gameID}</h1>
+      <h1 className="title">Game ID: <code>{gameID}</code>, user: <code>{user}</code></h1>
       <div className="game">
         <div className="main">
           <Board />

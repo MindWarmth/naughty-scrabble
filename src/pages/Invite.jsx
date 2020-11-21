@@ -23,7 +23,7 @@ const Invite = () => {
   const transport = useTransport();
   const history = useHistory();
 
-  const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}/#`;
+  const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}#`;
   const gameURL = `${baseUrl}/join/${gameID}`;
   const gamePath = `/game/${gameID}`;
 

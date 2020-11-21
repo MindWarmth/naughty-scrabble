@@ -1,4 +1,5 @@
-import React, { useContext, createContext, useState } from 'react';
+import React, { useContext, createContext, useEffect, useState } from 'react';
+import Context from '../context';
 
 export const TYPE = {
   VOCABULARY: 'vocabulary',
@@ -9,7 +10,6 @@ const TransportContext = createContext({
   open: () => {},
   onMessage: () => {},
   sendMessage: () => {},
-  user: '',
 });
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
@@ -18,33 +18,38 @@ const connection = {};
 const DEFAULT_NAME = 'Alice';
 
 const TransportProvider = props => {  
-  const [ user, setUser ] = useState(null);
-  const [ dataChan, setDataChan ] = useState();
-  const [ eventHandlers, setEventHandlers ] = useState([]);
+  const {
+    setUser
+  } = useContext(Context);
+  const [ dataChannel, setDataChannel ] = useState();
+  const [ messageHandlers, setMessageHandlers ] = useState([]);
+  const [ message, setMessage ] = useState();
+
+  useEffect(() => {
+    if (message) {
+      messageHandlers.forEach((fn) => {
+        if (fn) {
+          fn(message);
+        }
+      });
+      setMessage(null);
+    }
+  }, [ message ]);
+
   const transport = {
     open: (gameID) => open(gameID),
     onMessage: (fn) => onMessage(fn),
     sendMessage: (message) => sendMessage(message),
-    user,
   };
 
   function onMessage(fn) {
-    if (eventHandlers) {
-      setEventHandlers(eventHandlers.push(fn));
-    }
-  }
-
-  function handleMessage(e) {
-    const data = JSON.parse(e.data);
-    console.log(`%cMessage received:\n${JSON.stringify(data)}`, 'font-weight: bold');
-    eventHandlers.forEach((fn) => {
-      fn(data);
-    });
+    console.log('messageHandlers', messageHandlers);
+    setMessageHandlers(prevMessageHandlers => [...prevMessageHandlers, fn]);
   }
 
   function sendMessage(message) {
-    if (dataChan) {
-      dataChan.send(JSON.stringify(message));
+    if (dataChannel) {
+      dataChannel.send(JSON.stringify(message));
     }
   }
 
@@ -68,11 +73,8 @@ const TransportProvider = props => {
         dataChannel.onopen = function() {
           console.log('%cDATACHANNEL OPENED', 'color: green');
           setUser(user);
-          setDataChan(dataChannel);
-          // dirty hack to prevent case when ${user} and ${dataChan} props are not ready in Promise callback execution stream
-          setTimeout(() => {
-            resolve();
-          }, 500);          
+          setDataChannel(dataChannel);
+          resolve();
         };
         dataChannel.onclose = function(){
           console.log('%cDATACHANNEL CLOSED', 'color: red');
@@ -85,7 +87,9 @@ const TransportProvider = props => {
           ev.channel.onopen = function() {
             // Data channel is open and ready to be used
           };
-          ev.channel.onmessage = handleMessage;
+          ev.channel.onmessage = function(e) {
+            setMessage(JSON.parse(e.data));
+          };
         };
   
         return peerConnection;
