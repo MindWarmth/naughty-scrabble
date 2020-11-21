@@ -1,21 +1,45 @@
-import Board from './components/Board';
-import Log from './components/Log';
-import Scoreboard from './components/Scoreboard';
-import Controls from './components/Controls';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+import Welcome from './pages/Welcome';
+import Create from './pages/Create';
+import Invite from './pages/Invite';
+import Join from './pages/Join';
+import Game from './pages/Game';
 import './App.css';
 
 function App() {
   return (
-    <div className="app">
-      <div className="main">
-        <Board />
+    <Router>
+      <div className="app">
+        <Switch>
+
+          <Route path="/create">
+            <Create />
+          </Route>
+
+          <Route path="/invite">
+            <Invite />
+          </Route>
+
+          <Route path="/join/:gameID">
+            <Join />
+          </Route>
+
+          <Route path="/game/:gameID">
+            <Game />
+          </Route>
+         
+          <Route path="/">
+            <Welcome />
+          </Route>
+
+        </Switch>        
       </div>
-      <div className="sidebar">
-        <Log />
-        <Scoreboard />
-        <Controls />
-      </div>
-    </div>
+    </Router>
   );
 }
 
