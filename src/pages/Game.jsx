@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
@@ -8,22 +8,26 @@ import Context from '../context';
 import { useTransport, TYPE } from '../helpers/transport-provider';
 
 const Game = () => {
-  const { gameID } = useParams();
-  const { vocabulary, setVocabulary, user } = useContext(Context);
+  const params = useParams();
+  const { gameID, dictionary, setDictionary, user } = useContext(Context);
   const transport = useTransport();
+
+  if (!gameID && params.gameID) {
+    return <Redirect to={`/join/${params.gameID}`} />
+  }
 
   const handleMessage = (message) => {
     if (message.type === TYPE.VOCABULARY) {
-      setVocabulary(message.data);
+      setDictionary(message.data);
     }
   }
 
   useEffect(() => {
-    transport.onMessage(handleMessage);
-    if (vocabulary) {
+    transport.onMessage((handleMessage));
+    if (dictionary) {
       transport.sendMessage({
         type: TYPE.VOCABULARY,
-        data: vocabulary,
+        data: dictionary,
       });
     }
   }, []);
@@ -41,6 +45,10 @@ const Game = () => {
           <Controls />
         </div>
       </div>
+      {
+        dictionary && dictionary.length &&
+        <code>{ dictionary.map((word) => `${word}, `) }</code>
+      }
     </div>
   );
 }
