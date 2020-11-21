@@ -9,7 +9,9 @@ import Context from '../context';
 
 const Create = () => {
   const [ text, setText ] = useState('');
-  const { setGameID } = useContext(Context);
+  const { setGameID, setDictionary } = useContext(Context);
+  const isWindowWorker = Boolean(window.Worker);
+  const dictionary = new Worker("workers/dictionary.js")
 
   const handleOnChangeTextField = ({currentTarget: {value}}) => setText(value)
 
@@ -22,7 +24,15 @@ const Create = () => {
     }
   }
 
-  const handleOnClickProceed = () => setGameID(nanoid());
+  const handleOnClickProceed = () => { 
+    setGameID(nanoid());
+    if (isWindowWorker) {
+      dictionary.postMessage(text)
+      dictionary.onmessage = function({ data }) {
+        setDictionary(data)
+      }
+    }
+  }
 
   return (
     <div>
@@ -51,7 +61,7 @@ const Create = () => {
           </Button>
         </Grid>
         <Grid item xs={ 12 }>
-          <Button component={ Link } onClick={ handleOnClickProceed } to="/invite" color="primary" variant="contained" size="large">
+          <Button component={ Link } disabled={!text} onClick={ handleOnClickProceed } to="/invite" color="primary" variant="contained" size="large">
             Proceed
             </Button>
         </Grid>

@@ -1,11 +1,18 @@
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
 import Controls from '../components/Controls';
+import Context from '../context';
 
 const Game = () => {
-  const { gameID } = useParams();
+  const params = useParams();
+  const { gameID, dictionary } = useContext(Context);
+
+  if (!gameID) {
+    console.warn('Implement autojoin from url', params)
+  }
 
   return (
     <div>
@@ -20,6 +27,10 @@ const Game = () => {
           <Controls />
         </div>
       </div>
+      {
+        dictionary && dictionary.length &&
+        <code>{ dictionary.map((word) => `${word}, `) }</code>
+      }
     </div>
   );
 }
