@@ -52,7 +52,7 @@ function Controls() {
       <Button variant="contained" size="small" className={classes.btn}>
         Reset
       </Button>
-      <Button variant="contained" size="small" className={classes.btn}>
+      <Button variant="outlined" size="small" className={classes.btn}>
         Swap
       </Button>
       <IconButton aria-label="Leave" component="span" size="small" onClick={handleLeaveClick}>

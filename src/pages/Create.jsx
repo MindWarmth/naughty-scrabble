@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { nanoid } from 'nanoid';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -57,7 +58,7 @@ const Create = () => {
             startIcon={<AssignmentIcon />}
             onClick={ handleOnClickPasteFromClipBoard }
           >
-            Paste from clipboard
+            Paste<Hidden xsDown> from clipboard</Hidden>
           </Button>
         </Grid>
         <Grid item xs={ 12 }>

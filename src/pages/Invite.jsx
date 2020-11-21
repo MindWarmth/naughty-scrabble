@@ -7,6 +7,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -79,7 +80,7 @@ const Invite = () => {
                     size="large"
                     startIcon={copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> : copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />}
                   >
-                    Copy to cliboard
+                    Copy<Hidden xsDown> to cliboard</Hidden>
                   </Button>
                 </Grid>
               )
@@ -110,12 +111,13 @@ const Invite = () => {
             size="large"
             startIcon={ loading && <CircularProgress size={ 16 } /> }
           >
-            Join game
+            Start<Hidden xsDown> game</Hidden>
           </Button>
         </Grid>
         <Grid item xs={ 6 }>
           <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
-            Create new game
+            <Hidden xsDown>Create new game</Hidden>
+            <Hidden smUp>Create</Hidden>
           </Button>
         </Grid>
       </Grid>

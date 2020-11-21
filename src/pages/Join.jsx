@@ -3,6 +3,7 @@ import { useHistory, useParams, Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Hidden from '@material-ui/core/Hidden';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -48,7 +49,7 @@ const Join = () => {
         </Grid>
         <Grid item xs={ 6 }>
           <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
-            Create new game
+            Create<Hidden xsDown> new game</Hidden>
           </Button>
         </Grid>
       </Grid>
