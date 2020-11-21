@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useMemo } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
 import Grid from '@material-ui/core/Grid';
@@ -21,6 +21,7 @@ const Game = () => {
       new Array(SIZE).fill(null)
     )
   );
+  const [ chunks, setChunks ] = useState();
   const [ canPlay, setCanPlay ] = useState(true)
   const transport = useTransport();
   const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
@@ -47,6 +48,10 @@ const Game = () => {
         data: dictionary,
       });
     };
+
+    return () => {
+      chunksWorker.terminate();
+    }
   }, []);
 
   useEffect(() => {
@@ -55,9 +60,34 @@ const Game = () => {
     }
   }, [ fieldsData ]);
 
+  const foundWords = useMemo(() => {
+    if (chunks && chunks.data && chunks.list && dictionary) {
+      return chunks.list.reduce((acc, chunk) => {
+
+        if (dictionary.includes(chunk)) {
+          return {
+            data: {
+              ...acc.data,
+              [chunk]: chunks.data[chunk],
+            },
+            list: [...acc.list, chunk]
+          }
+        }
+
+        return acc;
+      }, {
+        data: {},
+        list: []
+      })
+    }
+    return null;
+  }, [ chunks, dictionary ]);
+
   if (!gameID && params.gameID) {
     return <Redirect to={`/join/${params.gameID}`} />
   }
+
+  chunksWorker.onmessage = ({ data }) => setChunks(data);
 
   const handleOnBoardChange = ({ row, col, letter }) => {
     const newFieldsData = set(`${row}.${col}`, letter, fieldsData);
@@ -85,10 +115,6 @@ const Game = () => {
     history.push('/');
   };
 
-  chunksWorker.onmessage = ({ data }) => {
-    console.log('Chunks recived', data);
-  }
-
   return (
     <Grid container direction="row" justify="center" alignItems="flex-start" spacing={ 3 }>
       <Grid item xs={ 12 } md={ 10 }>
@@ -96,7 +122,11 @@ const Game = () => {
         <p>user: <code>{user}</code></p>
       </Grid>
       <Grid item xs={ 12 } sm={ 6 }>
-        <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
+        <Board
+          fieldsData={ fieldsData }
+          onChange={ handleOnBoardChange }
+          canPlay={canPlay}
+        />
       </Grid>
       <Grid item xs={ 12 } sm={ 6 } md={ 4 }>
         <Grid container direction="column" alignItems="stretch">
