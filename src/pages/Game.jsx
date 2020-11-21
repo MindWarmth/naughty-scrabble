@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
@@ -10,8 +10,8 @@ const Game = () => {
   const params = useParams();
   const { gameID, dictionary } = useContext(Context);
 
-  if (!gameID) {
-    console.warn('Implement autojoin from url', params)
+  if (!gameID && params.gameID) {
+    return <Redirect to={`/join/${params.gameID}`} />
   }
 
   return (
