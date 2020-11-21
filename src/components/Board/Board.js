@@ -1,4 +1,5 @@
 import get from 'lodash/fp/get';
+import cn from 'classnames';
 import './Board.scss';
 
 const SIZE = 10;
@@ -20,7 +21,7 @@ function Board({ fieldsData, onChange, canPlay }) {
   }
 
   return (
-    <div className="board">
+    <div className={ cn("board", { 'board--active': canPlay }) }>
         { rows.map(( rval, rowIndex) => (
           <div className='board__row' key={`row-${rowIndex}`}>
             { cols.map(( cval, colIndex) => {

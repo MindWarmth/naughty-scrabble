@@ -62,6 +62,7 @@ const Game = () => {
   return (
     <div>
       <h1>Game ID: <code>{gameID}</code></h1>
+      <h2>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</h2>
       <p>user: <code>{user}</code></p>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 12 } sm={ 8 }>

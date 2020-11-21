@@ -1,6 +1,16 @@
+$cellSize: 28px;
+
 .board {
     border: 1px solid #222;
     padding: 1px;
+    &__row,
+    &__cell {
+        position: relative;
+        &:focus-within {
+            z-index: 2;
+        }
+    }
+
     
     &__row {
         display: flex;
@@ -8,17 +18,30 @@
 
     &__cell {
         background-color: #222;
-        height: 28px;
+        height: $cellSize;
         margin: 1px 0 0 1px;
-        width: 28px;
+        width: $cellSize;
+        text-align: center;
+        line-height: $cellSize;
+        border: none;
         outline: none;
+        font-weight: 800;
+    }
 
-        &:hover {
-            background-color: #333;
-        }
+    &--active {
+        input.board__cell {
+            background-color: rgb(41, 39, 29);
+            color: white;
+            cursor: pointer;
 
-        &:focus {
-            box-shadow: 0 0 5px rgba(235, 250, 19, 0.8)
+            &:hover,
+            &:focus {
+                background-color: #333;
+            }
+    
+            &:focus {
+                box-shadow: 0 0 5px rgba(235, 250, 19, 0.8)
+            }
         }
     }
 }
