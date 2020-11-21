@@ -10,12 +10,19 @@ import Controls from '../components/Controls';
 import Context from '../context';
 import { useTransport, TYPE } from '../helpers/transport-provider';
 
+const SIZE = 10;
+
 const Game = () => {
   const params = useParams();
-  const { gameID, dictionary, setDictionary, user } = useContext(Context);
-  const [ fieldsData, setFieldsData ] = useState({});
+  const { gameID, dictionary, setDictionary, user, publicURL } = useContext(Context);
+  const [ fieldsData, setFieldsData ] = useState(
+    new Array(SIZE).fill(
+      new Array(SIZE).fill(' ')
+    )
+  );
   const [ canPlay, setCanPlay ] = useState(true)
   const transport = useTransport();
+  const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
 
   useEffect(() => {
     transport.onMessage(({ type, data }) => {
@@ -40,6 +47,12 @@ const Game = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (fieldsData) {
+      chunksWorker.postMessage({ fieldsData });
+    }
+  }, [ fieldsData ]);
+
   if (!gameID && params.gameID) {
     return <Redirect to={`/join/${params.gameID}`} />
   }
@@ -57,6 +70,10 @@ const Game = () => {
         fieldsData: newFieldsData
       }
     });
+  }
+
+  chunksWorker.onmessage = ({ data }) => {
+    console.log('Chunks recived', data);
   }
 
   return (

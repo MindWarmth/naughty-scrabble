@@ -12,7 +12,7 @@ const Create = () => {
   const [ text, setText ] = useState('');
   const { publicURL, setGameID, setDictionary } = useContext(Context);
   const isWindowWorker = Boolean(window.Worker);
-  const dictionary = new Worker(`${publicURL}/workers/dictionary.js`);
+  const dictionaryWorker = new Worker(`${publicURL}/workers/dictionary.js`);
 
   const handleOnChangeTextField = ({currentTarget: {value}}) => setText(value)
 
@@ -28,8 +28,8 @@ const Create = () => {
   const handleOnClickProceed = () => { 
     setGameID(nanoid());
     if (isWindowWorker) {
-      dictionary.postMessage(text);
-      dictionary.onmessage = function({ data }) {
+      dictionaryWorker.postMessage(text);
+      dictionaryWorker.onmessage = ({ data }) => {
         setDictionary(data);
       }
     }
