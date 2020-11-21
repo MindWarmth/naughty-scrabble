@@ -27,7 +27,7 @@ function App() {
     }
   });
   const [ gameID, setGameID ] = useState();
-  const WEB_SOCKET_URL = 'ws://88.99.175.232:8054';
+  const WEB_SOCKET_URL = 'wss://ice-server.app.html.wtf';
 
   return (
     <Router>
