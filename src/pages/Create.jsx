@@ -15,10 +15,13 @@ const Create = () => {
     console.log(ev);
   }
 
-  const handleOnClickPasteFromClipBoard = () => {
-    navigator.clipboard.readText().then((text) => {
+  const handleOnClickPasteFromClipBoard = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
       setText(text);
-    }).catch((err) => console.log(err));
+    } catch (e) {
+      console.log('Failed to read clipboard');
+    }
   }
 
   const handleOnClickProceed = () => setGameID(nanoid());

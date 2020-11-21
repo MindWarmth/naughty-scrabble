@@ -37,10 +37,17 @@ const Invite = () => {
       .catch(err => console.log(`${err}`));
   }
 
-  const handleOnClickCopyToClipboard = () =>
-    copyStatus === COPY_STATUS.READY && navigator.clipboard.writeText(gameURL)
-      .then(() => setCopyStatus(COPY_STATUS.SUCCESS))
-      .catch(() => setCopyStatus(COPY_STATUS.FAILURE));
+  const handleOnClickCopyToClipboard = () => {
+    if (copyStatus === COPY_STATUS.READY) {
+      try {
+        navigator.clipboard.writeText(gameURL)
+          .then(() => setCopyStatus(COPY_STATUS.SUCCESS))
+          .catch(() => setCopyStatus(COPY_STATUS.FAILURE));
+      } catch (e) {
+        console.log('Failed to write to clipboard');
+      }
+    }
+  }
   
   const onGoClick = () => {
     setLoading(true);

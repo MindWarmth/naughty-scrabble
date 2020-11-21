@@ -8,7 +8,7 @@ const TransportContext = createContext({
 });
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
-const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
+const config = { "iceServers": [ { "urls":"stun:stun.l.google.com:19302" } ] };
 const connection = {};
 const DEFAULT_NAME = 'Alice';
 
@@ -139,14 +139,11 @@ const TransportProvider = props => {
       ws.onmessage = function(e) {
         var json = JSON.parse(e.data);
         if (json.gameID === gameID && json.from !== user) {
-          if (json.action === "candidate") {
-            console.log('candidate');
+          if (json.action === 'candidate') {
             processIce(json.data);
-          } else if (json.action === "offer") {
-            console.log('offer');
+          } else if (json.action === 'offer') {
             processOffer(json.data);
-          } else if (json.action === "answer") {
-            console.log('answer');
+          } else if (json.action === 'answer') {
             processAnswer(json.data);
           }
         }
