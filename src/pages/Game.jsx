@@ -61,6 +61,7 @@ const Game = () => {
   return (
     <div>
       <h1 className="title">Game ID: <code>{gameID}</code>, user: <code>{user}</code></h1>
+      <h2>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</h2>
       <div className="game">
         <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
         <div className="sidebar">
