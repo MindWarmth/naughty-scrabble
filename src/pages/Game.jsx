@@ -62,19 +62,27 @@ const Game = () => {
   return (
     <div>
       <h1>Game ID: <code>{gameID}</code></h1>
-      <h2>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</h2>
       <p>user: <code>{user}</code></p>
       <Grid container spacing={ 3 }>
         <Grid item xs={ 12 } sm={ 8 }>
           <Board fieldsData={fieldsData} onChange={ handleOnBoardChange } canPlay={canPlay}/>
         </Grid>
         <Grid item xs={ 12 } sm={ 4 }>
-          <Grid container direction="row">
+          <Grid container direction="column" alignItems="stretch">
+            <Grid item xs={ 12 }>
+              <p>{ canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }</p>
+            </Grid>
             <Hidden xsDown>
-              <Log />
+              <Grid item xs={ 12 }>
+                <Log />
+              </Grid>
             </Hidden>
-            <Scoreboard />
-            <Controls />
+            <Grid item xs={ 12 }>
+              <Scoreboard />
+            </Grid>
+            <Grid item xs={ 12 }>
+              <Controls />
+            </Grid>
           </Grid>
         </Grid>
         {

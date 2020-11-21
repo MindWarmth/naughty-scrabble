@@ -10,6 +10,8 @@ import { useTransport, TYPE } from '../../helpers/transport-provider';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
+    maxHeight: 120,
+    overflow: 'auto',
   },
 }));
 
@@ -47,12 +49,6 @@ function Log() {
     <List
       className={classes.root}
       component="nav"
-      aria-label="main mailbox folders"
-      subheader={
-        <ListSubheader component="div">
-          Logs:
-        </ListSubheader>
-      }
     >
       {logs.map((log, index) => (
         <ListItem key={index}>
