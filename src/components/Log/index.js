@@ -22,8 +22,18 @@ function Log() {
 
   useEffect(() => {
     transport.onMessage((message) => {
+      switch (message.type) {
+        case (TYPE.MESSAGE): {
+          setLogs(prevLogs => [message.data, ...prevLogs]);
+          break;
+        }
+        case (TYPE.PLAY):
+          setLogs(prevLogs => [`Oponent: ${message.data.previousStep.letter}`, ...prevLogs]);
+          break;
+        default:
+      }
       if (message.type === TYPE.MESSAGE) {
-        setLogs(prevLogs => [message.data, ...prevLogs]);
+        
       }
     });
     setTimeout(() => {
