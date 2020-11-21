@@ -15,7 +15,6 @@ const Join = () => {
     setLoading(true);
     transport.open(gameID).then(() => {
       history.push(gamePath);
-      setLoading(false);
     }).catch(() => {
       setLoading(false);
     });

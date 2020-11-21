@@ -9,7 +9,7 @@ import Context from '../context';
 
 const Create = () => {
   const [ text, setText ] = useState('');
-  const { setGameID } = useContext(Context);
+  const { setGameID, setVocabulary } = useContext(Context);
 
   const handleOnChangeTextField = (ev) => {
     console.log(ev);
@@ -24,7 +24,10 @@ const Create = () => {
     }
   }
 
-  const handleOnClickProceed = () => setGameID(nanoid());
+  const handleOnClickProceed = () => {
+    setGameID(nanoid());
+    setVocabulary(['hello', 'world']);
+  };
 
   return (
     <div>

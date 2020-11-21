@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import { useTransport } from '../../helpers/transport-provider';
+import { useTransport, TYPE } from '../../helpers/transport-provider';
 import './Log.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,13 +19,18 @@ function Log() {
   const [ logs, setLogs ] = useState([]);
 
   const handleMessage = (message) => {
-    setLogs([message].concat(logs.map((x) => x)));
+    if (message.type === TYPE.MESSAGE) {
+      setLogs([message.data].concat(logs.map((x) => x)));
+    }
   }
 
   useEffect(() => {
     transport.onMessage(handleMessage);
     setTimeout(() => {
-      transport.sendMessage(`${transport.user} joined`);
+      transport.sendMessage({
+        type: TYPE.MESSAGE,
+        data: `${transport.user} joined`,
+      });
     }, 1000)
   }, []);
 

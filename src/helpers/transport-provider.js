@@ -1,5 +1,10 @@
 import React, { useContext, createContext, useState } from 'react';
 
+export const TYPE = {
+  VOCABULARY: 'vocabulary',
+  MESSAGE: 'message',
+};
+
 const TransportContext = createContext({
   open: () => {},
   onMessage: () => {},
@@ -15,7 +20,7 @@ const DEFAULT_NAME = 'Alice';
 const TransportProvider = props => {  
   const [ user, setUser ] = useState(null);
   const [ dataChan, setDataChan ] = useState();
-  const [ chan, setChan ] = useState();
+  const [ eventHandlers, setEventHandlers ] = useState([]);
   const transport = {
     open: (gameID) => open(gameID),
     onMessage: (fn) => onMessage(fn),
@@ -24,19 +29,22 @@ const TransportProvider = props => {
   };
 
   function onMessage(fn) {
-    if (chan) {
-      chan.onmessage = function(e) {
-        console.log(`%cMessage received:\n${e.data}`, 'font-weight: bold');
-        if (fn) {
-          fn(e.data);
-        }
-      };
+    if (eventHandlers) {
+      setEventHandlers(eventHandlers.push(fn));
     }
+  }
+
+  function handleMessage(e) {
+    const data = JSON.parse(e.data);
+    console.log(`%cMessage received:\n${JSON.stringify(data)}`, 'font-weight: bold');
+    eventHandlers.forEach((fn) => {
+      fn(data);
+    });
   }
 
   function sendMessage(message) {
     if (dataChan) {
-      dataChan.send(message);
+      dataChan.send(JSON.stringify(message));
     }
   }
 
@@ -76,8 +84,8 @@ const TransportProvider = props => {
         peerConnection.ondatachannel = function(ev) {
           ev.channel.onopen = function() {
             // Data channel is open and ready to be used
-            setChan(ev.channel);
           };
+          ev.channel.onmessage = handleMessage;
         };
   
         return peerConnection;

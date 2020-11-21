@@ -27,11 +27,12 @@ function App() {
     }
   });
   const [ gameID, setGameID ] = useState();
+  const [ vocabulary, setVocabulary ] = useState();
   const WEB_SOCKET_URL = 'wss://ice-server.app.html.wtf';
 
   return (
     <Router>
-      <Context.Provider value={{ gameID, setGameID }}>
+      <Context.Provider value={{ gameID, setGameID, vocabulary, setVocabulary }}>
         <TransportProvider url={WEB_SOCKET_URL}>
           <ThemeProvider theme={theme}>
             <div className="app">
