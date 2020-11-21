@@ -4,6 +4,15 @@
   padding: 10px;
 }
 
+.title {
+  font-size: medium;
+  text-align: center;
+}
+
+.game {
+  display: flex;
+}
+
 .main {
   width: 440px;
 }

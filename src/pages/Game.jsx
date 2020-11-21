@@ -9,14 +9,16 @@ const Game = () => {
 
   return (
     <div>
-      <h1>Game ID: {gameID}</h1>
-      <div className="main">
-        <Board />
-      </div>
-      <div className="sidebar">
-        <Log />
-        <Scoreboard />
-        <Controls />
+      <h1 className="title">Game ID: {gameID}</h1>
+      <div className="game">
+        <div className="main">
+          <Board />
+        </div>
+        <div className="sidebar">
+          <Log />
+          <Scoreboard />
+          <Controls />
+        </div>
       </div>
     </div>
   );

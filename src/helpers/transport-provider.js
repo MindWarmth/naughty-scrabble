@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 
-const TransportContext = createContext({ open: () => {}, join: () => {} });
+const TransportContext = createContext({ open: () => {} });
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
@@ -9,29 +9,15 @@ const DEFAULT_NAME = 'Alice';
 
 const TransportProvider = props => {  
   const transport = {
-    // TODO rework, these methods should be different
-    open: (gameID) => openConnection(gameID),
-    join: (gameID) => openConnection(gameID),
+    open: (gameID) => open(gameID),
   };
 
-  function openConnection(gameID) {
+  function open(gameID) {
     return new Promise((resolve, reject) => {
       var ws = null;
       var peerConnection;
       var dataChannel;
-      var user = '';
-      var user2 = '';
-
-      // TODO rework with gameID
-  
-      var searchParams = new URLSearchParams(window.location.search);
-      var name = searchParams.get('name');
-      var to = searchParams.get('to');
-  
-      user = name || `${DEFAULT_NAME}_${Math.floor(Math.random() * 10000)}`;
-      if (to) {
-        user2 = to;
-      }
+      var user = `${DEFAULT_NAME}_${Math.floor(Math.random() * 10000)}`;
   
       function openDataChannel() {
         peerConnection = new crossBrowserPeerConnection(config, connection);
@@ -46,7 +32,7 @@ const TransportProvider = props => {
         dataChannel.onopen = function() {
           console.log('%cDATACHANNEL OPENED', 'color: green');
           // TODO for demo purpose
-          dataChannel.send(`Hellow from ${user}!`);
+          dataChannel.send(`Hello from ${user}!`);
           resolve();
         };
         dataChannel.onclose = function(){
@@ -62,7 +48,7 @@ const TransportProvider = props => {
           };
           ev.channel.onmessage = function(e) {
             // TODO for demo purpose
-            console.log(`%cMessage from ${user2}:\n${e.data}`, 'font-weight: bold');
+            console.log(`%cMessage received:\n${e.data}`, 'font-weight: bold');
           };
         };
   
@@ -70,7 +56,7 @@ const TransportProvider = props => {
       }
   
       function sendNegotiation(type, sdp) {
-        var json = { from: user, to: user2, action: type, data: sdp };
+        var json = { from: user, gameID: gameID, action: type, data: sdp };
         ws.send(JSON.stringify(json));
       }
   
@@ -89,7 +75,7 @@ const TransportProvider = props => {
         }, function(err) {
           console.log(err);
         });
-      };
+      }
   
       function processAnswer(answer) {
         peerConnection.setRemoteDescription(new crossBrowserSessionDescription(answer));
@@ -105,41 +91,38 @@ const TransportProvider = props => {
       ws = new WebSocket(props.url);
       ws.onopen = function(e) {    
         console.log('%cWebsocket opened', 'color: gray');
-        if (to) {
-          openDataChannel();
+        
+        openDataChannel();
   
-          var sdpConstraints = { offerToReceiveAudio: true,  offerToReceiveVideo: false };
-          peerConnection.createOffer(sdpConstraints).then(function(sdp) {
-              peerConnection.setLocalDescription(sdp);
-              sendNegotiation("offer", sdp);
-          }, function(err) {
-              console.log(err);
-          });
-        }
-      }
+        var sdpConstraints = { offerToReceiveAudio: true, offerToReceiveVideo: false };
+        peerConnection.createOffer(sdpConstraints).then(function(sdp) {
+          peerConnection.setLocalDescription(sdp);
+          sendNegotiation("offer", sdp);
+        }, function(err) {
+          console.log(err);
+        });
+      };
       ws.onclose = function(e) {   
         console.log('%cWebsocket closed', 'color: gray');
-      }
+      };
       ws.onerror = function(e) {   
         console.log('%cWebsocket error', 'color: red');
-      }
-      ws.onmessage = function(e) { 
+      };
+      ws.onmessage = function(e) {
         var json = JSON.parse(e.data);
-        if (json.action === "candidate") {
-          if (json.to === user) {
+        if (json.gameID === gameID && json.from !== user) {
+          if (json.action === "candidate") {
+            console.log('candidate');
             processIce(json.data);
-          }
-        } else if (json.action === "offer") {
-          if (json.to === user) {
-            user2 = json.from;
+          } else if (json.action === "offer") {
+            console.log('offer');
             processOffer(json.data);
-          }
-        } else if (json.action === "answer") {
-          if (json.to === user) {
+          } else if (json.action === "answer") {
+            console.log('answer');
             processAnswer(json.data);
           }
-        } 
-      }
+        }
+      };
     });
   }
   

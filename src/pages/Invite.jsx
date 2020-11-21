@@ -1,12 +1,12 @@
 import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ShareIcon from '@material-ui/icons/Share';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -18,10 +18,11 @@ const COPY_STATUS = {
 
 const Invite = () => {
   const [ copyStatus, setCopyStatus ] = useState(COPY_STATUS.READY);
+  const [ loading, setLoading ] = useState(false);
   const { gameID } = useContext(Context);
   const host = 'http://localhost:3000';
   const gamePath = `/game/${gameID}`;
-  const gameURL = `${host}${gamePath}`;
+  const gameURL = `${host}/join/${gameID}`;
   const transport = useTransport();
   const history = useHistory();
 
@@ -42,8 +43,12 @@ const Invite = () => {
       .catch(() => setCopyStatus(COPY_STATUS.FAILURE));
   
   const onGoClick = () => {
+    setLoading(true);
     transport.open(gameID).then(() => {
       history.push(gamePath);
+      setLoading(false);
+    }).catch(() => {
+      setLoading(false);
     });
   }
   
@@ -65,8 +70,9 @@ const Invite = () => {
         </IconButton></p>
       }
       <p>
-        <Button color="primary" variant="contained" onClick={onGoClick}>Go to the game</Button>
+        <Button color="primary" variant="contained" onClick={onGoClick} disabled={loading}>Proceed to game</Button>
       </p>
+      {loading && <p>Waiting for peer: <CircularProgress size={24} /></p>}
     </div>
   );
 };
