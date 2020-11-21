@@ -11,9 +11,7 @@ const Create = () => {
   const [ text, setText ] = useState('');
   const { setGameID } = useContext(Context);
 
-  const handleOnChangeTextField = (ev) => {
-    console.log(ev);
-  }
+  const handleOnChangeTextField = ({currentTarget: {value}}) => setText(value)
 
   const handleOnClickPasteFromClipBoard = async () => {
     try {
