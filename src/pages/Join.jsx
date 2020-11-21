@@ -28,7 +28,7 @@ const Join = () => {
       <p>
         <Button variant="contained" color="primary" onClick={onJoinClick} disabled={loading}>Join</Button>
       </p>
-      {loading && <p>Joining: <CircularProgress size={24} /></p>}
+      {loading && <>Joining: <CircularProgress size={24} /></>}
     </div>
   );
 }
