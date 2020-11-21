@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import AdultsIcon from '../icons/AdultsIcon';
 
 const Welcome = () => (
   <div>
@@ -9,6 +10,7 @@ const Welcome = () => (
       Create new game
     </Button>
     <p>To join an existed game you need a link.</p>
+    <AdultsIcon fill="#E74C3C" width={48} height={48} />
   </div>
 );
 
