@@ -1,17 +1,35 @@
 import React, { useEffect } from 'react';
-import Board from './components/Board';
-import Log from './components/Log';
-import Scoreboard from './components/Scoreboard';
-import Controls from './components/Controls';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import Welcome from './pages/Welcome';
+import Create from './pages/Create';
+import Invite from './pages/Invite';
+import Join from './pages/Join';
+import Game from './pages/Game';
 import './App.css';
 
-const WEB_SOCKET_URL = 'ws://88.99.175.232:8054';
-const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
-const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
-const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
-const connection = {};
-
 function App() {
+  const theme = createMuiTheme({
+    palette: {
+      type: 'dark',
+      primary: {
+        light: '#ff7961',
+        main: '#f44336',
+        dark: '#ba000d',
+        contrastText: '#fff',
+      },
+    }
+  });
+  const WEB_SOCKET_URL = 'ws://88.99.175.232:8054';
+  const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
+  const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
+  const config = { "iceServers": [{ "urls":"stun:stun.l.google.com:19302" }] };
+  const connection = {};
+
   useEffect(() => {
     var ws = null;
     var peerConnection;
@@ -137,16 +155,35 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <div className="main">
-        <Board />
-      </div>
-      <div className="sidebar">
-        <Log />
-        <Scoreboard />
-        <Controls />
-      </div>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <div className="app">
+          <Switch>
+
+            <Route path="/create">
+              <Create />
+            </Route>
+
+            <Route path="/invite">
+              <Invite />
+            </Route>
+
+            <Route path="/join/:gameID">
+              <Join />
+            </Route>
+
+            <Route path="/game/:gameID">
+              <Game />
+            </Route>
+          
+            <Route path="/">
+              <Welcome />
+            </Route>
+
+          </Switch>        
+        </div>
+      </ThemeProvider>
+    </Router>
   );
 }
 
