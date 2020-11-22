@@ -34,7 +34,7 @@ function Log() {
       const { type, data } = message;
       switch (type) {
         case (TYPE.WELCOME): {
-          setLogs(prevLogs => [`Opponent ${data.user} joined`, ...prevLogs]);
+          setLogs(prevLogs => [`${data.user} joined to the game`, ...prevLogs]);
           setOpponent(data.user);
           break;
         }
