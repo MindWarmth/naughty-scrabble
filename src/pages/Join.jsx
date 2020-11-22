@@ -43,9 +43,10 @@ const Join = () => {
         <Grid container spacing={ 3 }>
           <Grid item xs={ 12 }>
             <h1>Join to the game</h1>
-            <code>Game ID: {gameID}</code>
+            <code style={{fontSize: '0.8em'}}>Game ID: {gameID}</code>
           </Grid>
           <Grid item xs={ 12 }>
+            <p> Please, enter your name.</p>
             <TextField
               label="Username"
               placeholder="Put your username here"
