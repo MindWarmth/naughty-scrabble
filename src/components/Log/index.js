@@ -19,9 +19,23 @@ function Log() {
   const { user, opponent, setOpponent } = useContext(Context);
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
+  const [ message, setMessage ] = useState();
 
   useEffect(() => {
-    transport.onMessage(({ type, data }) => {
+    transport.onMessage((msg) => {
+      setMessage(msg)
+    });
+    setTimeout(() => {
+      transport.sendMessage({
+        type: TYPE.WELCOME,
+        data: { user },
+      });
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    if (message) {
+      const { type, data } = message;
       switch (type) {
         case (TYPE.WELCOME): {
           setLogs(prevLogs => [`Opponent ${data.user} joined`, ...prevLogs]);
@@ -36,14 +50,8 @@ function Log() {
           break;
         default:
       }
-    });
-    setTimeout(() => {
-      transport.sendMessage({
-        type: TYPE.WELCOME,
-        data: { user },
-      });
-    }, 1000);
-  }, []);
+    }
+  }, [ message ]);
 
   return (
     <List className={classes.root} component="nav" dense>
