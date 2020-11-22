@@ -42,7 +42,7 @@ onmessage = function({ data: { fieldsData, foundWords } }) {
         word += value;
 
         // if end of word and unique
-        if ((!fieldsData[row + 1][col] ||  fieldsData[row + 1][col].startVertical) && !chunks.data[word]) {
+        if ((!fieldsData[row + 1][col] || fieldsData[row + 1][col].startVertical) && !chunks.data[word]) {
           chunks.list.push(word);
           chunks.data[word] = { word, start: [startRow, col], end: [row, col], type: 'vertical'};
           word = '';
