@@ -65,7 +65,7 @@ $cellSize: 28px;
         }
 
         &--type-vertical {
-            &:before {
+            &:after {
                 top: -2px;
                 left: 0;
                 right: 0;
@@ -73,11 +73,11 @@ $cellSize: 28px;
                 border-left-width: 1px;
                 border-right-width: 1px;
             }
-            &.board__cell--start-vertical:before {
+            &.board__cell--start-vertical:after {
                 border-top-width: 1px;
                 border-radius: 4px 4px 0 0;
             }
-            &.board__cell--end-vertical:before {
+            &.board__cell--end-vertical:after {
                 border-bottom-width: 1px;
                 border-radius: 0 0 4px 4px;
             }
