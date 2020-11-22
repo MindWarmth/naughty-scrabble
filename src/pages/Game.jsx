@@ -201,45 +201,28 @@ const Game = () => {
 
   return (
     <Grid container direction="row" justify="center" alignItems="flex-start" spacing={ 3 }>
-      <Grid item xs={ 12 } md={ 10 }>
-        <h1>Game ID: <code>{gameID}</code></h1>
-      </Grid>
       <Grid item xs={ 12 } sm={ 6 }>
         <Board
           fieldsData={ fieldsDataEnhanced }
           onChange={ handleOnBoardChange }
           canPlay={canPlay}
         />
-      </Grid>
-      <Grid item xs={ 12 } sm={ 6 } md={ 4 }>
-        <Grid container direction="column" alignItems="stretch">
-          <Grid item xs={ 12 }>
-            <Grid container justify="space-between" alignItems="center">
-              <Grid item>
-                { canPlay ? 'You turn!' : <small>Wait for the opponent...</small> }
-              </Grid>
-              <Grid item>
-              <IconButton aria-label="Leave" component="span" size="small" onClick={ handleLeaveClick }>
-                <ExitToAppIcon />
-              </IconButton>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={ 12 }>
-            <Log />
-          </Grid>
-          <Grid item xs={ 12 }>
-            <Scoreboard score={score} />
-          </Grid>
-        </Grid>
-      </Grid>
-      {
-        dictionary && dictionary.length > 0 && (
-          <Grid item xs={ 12 } md={ 10 }>
-            <code>{ dictionary.map((word) => `${word}, `) }</code>
-          </Grid>
-        )
-      }
+
+        <Log canPlay={ canPlay }/>
+        
+        <Scoreboard score={score} />
+
+        <IconButton aria-label="Leave" component="span" size="small" onClick={ handleLeaveClick }>
+          <ExitToAppIcon />
+        </IconButton>
+
+        {
+          dictionary && dictionary.length > 0 && (
+            <div>{ dictionary.map((word) => `${word}, `) }</div>
+          )
+        }
+
+      </Grid>      
     </Grid>
   );
 }
