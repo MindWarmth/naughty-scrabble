@@ -75,6 +75,7 @@ const Create = () => {
             <h1>Create a new game</h1>
           </Grid>
           <Grid item xs={ 12 }>
+            <p> Please, enter your name.</p>
             <TextField
               label="Username"
               placeholder="Put your username here"
@@ -84,8 +85,9 @@ const Create = () => {
               required={ false }
               onChange={ handleOnChangeUsernameField }
             />
+            <p style={{marginTop: 40}}>Insert any english text here which will be used as dictionary for the game.</p>
             <TextField
-              label="Insert text which will be used as dictionary"
+              label="Dictionary"
               placeholder="Put text here"
               className={classes.formEl}
               multiline

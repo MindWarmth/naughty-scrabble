@@ -11,8 +11,8 @@ const Welcome = () => (
     <Grid item xs={ 12 } sm={ 6 } md={ 5 }>
       <h1>Welcome<br/>to the Naughty Board!</h1>
       <h2>Press the button below to create a new game.</h2>
-      <Button component={ Link } to="/create" color="primary" variant="contained" size="large">
-        Create new game
+      <Button style={{maxWidth: 280}} fullWidth component={ Link } to="/create" color="primary" variant="contained" size="large">
+        Play
       </Button>
       <p>To join an existed game you need a link.</p>
     </Grid>
