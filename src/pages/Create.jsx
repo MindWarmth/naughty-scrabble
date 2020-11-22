@@ -15,10 +15,11 @@ const useStyles = makeStyles({
     marginTop: 16,
   },
 });
+const LOCALSTORAGE_DICTIONARY_KEY = 'dictionary';
 
 const Create = () => {
   const classes = useStyles();
-  const [ text, setText ] = useState('');
+  const [ text, setText ] = useState(localStorage.getItem(LOCALSTORAGE_DICTIONARY_KEY));
   const [ username, setUsername ] = useState(getRandomName());
   const {
     publicURL,
@@ -53,6 +54,7 @@ const Create = () => {
       dictionaryWorker.postMessage(text);
       dictionaryWorker.onmessage = ({ data }) => {
         setDictionary(data);
+        localStorage.setItem(LOCALSTORAGE_DICTIONARY_KEY, data);
       }
     }
   }
