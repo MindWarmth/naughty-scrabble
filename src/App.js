@@ -27,9 +27,10 @@ function App() {
     }
   });
   const [ gameID, setGameID ] = useState();
-  const [ dictionary, setDictionary ] = useState();
+  const [ dictionary, setDictionary ] = useState([]);
   const [ user, setUser ] = useState();
   const [ opponent, setOpponent ] = useState();
+  const [ message, setMessage ] = useState();
   const WEB_SOCKET_URL = 'wss://ice-server.app.html.wtf';
 
   return (
@@ -39,7 +40,8 @@ function App() {
         gameID, setGameID, 
         dictionary, setDictionary, 
         user, setUser,
-        opponent, setOpponent
+        opponent, setOpponent,
+        message, setMessage,
       }}>
         <TransportProvider url={WEB_SOCKET_URL}>
           <ThemeProvider theme={theme}>

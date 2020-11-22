@@ -1,6 +1,9 @@
 $cellSize: 28px;
 
 .board {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
     user-select: none;
 
     &__row,

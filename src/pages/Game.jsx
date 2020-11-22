@@ -16,20 +16,34 @@ const SIZE = 10;
 
 const Game = () => {
   const params = useParams();
-  const { gameID, setGameID, dictionary, setDictionary, user, setUser, publicURL, setOpponent } = useContext(Context);
+  const { gameID, setGameID, dictionary, setDictionary, user, setUser, publicURL, setOpponent, message } = useContext(Context);
   const [ fieldsData, setFieldsData ] = useState(
     new Array(SIZE).fill(
       new Array(SIZE).fill(null)
     )
   );
   const [ chunks, setChunks ] = useState();
-  const [ canPlay, setCanPlay ] = useState(true)
+  const [ canPlay, setCanPlay ] = useState(true);
   const transport = useTransport();
   const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
   const history = useHistory();
 
   useEffect(() => {
-    transport.onMessage(({ type, data }) => {
+    if (dictionary.length > 0) {
+      transport.sendMessage({
+        type: TYPE.DICTIONARY,
+        data: dictionary,
+      });
+    }
+
+    return () => {
+      chunksWorker.terminate();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (message) {
+      const { type, data } = message;
       switch (type) {
         case TYPE.DICTIONARY:
           setDictionary(data);
@@ -41,19 +55,8 @@ const Game = () => {
         default:
           break;
       }
-    });
-
-    if (dictionary) {
-      transport.sendMessage({
-        type: TYPE.DICTIONARY,
-        data: dictionary,
-      });
-    };
-
-    return () => {
-      chunksWorker.terminate();
     }
-  }, []);
+  }, [ message ]);
 
   useEffect(() => {
     if (fieldsData) {
@@ -176,7 +179,6 @@ const Game = () => {
     <Grid container direction="row" justify="center" alignItems="flex-start" spacing={ 3 }>
       <Grid item xs={ 12 } md={ 10 }>
         <h1>Game ID: <code>{gameID}</code></h1>
-        <p>user: <code>{user}</code></p>
       </Grid>
       <Grid item xs={ 12 } sm={ 6 }>
         <Board
@@ -199,11 +201,9 @@ const Game = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Hidden xsDown>
-            <Grid item xs={ 12 }>
-              <Log />
-            </Grid>
-          </Hidden>
+          <Grid item xs={ 12 }>
+            <Log />
+          </Grid>
           <Grid item xs={ 12 }>
             <Scoreboard />
           </Grid>

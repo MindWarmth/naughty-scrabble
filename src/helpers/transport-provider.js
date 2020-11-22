@@ -5,12 +5,11 @@ export const TYPE = {
   DICTIONARY: 'dictionary',
   WELCOME: 'welcome',
   PLAY: 'play',
-  LEAVE: 'LEAVE',
+  LEAVE: 'leave',
 };
 
 const TransportContext = createContext({
   open: () => {},
-  onMessage: () => {},
   sendMessage: () => {},
 });
 const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection;
@@ -20,31 +19,13 @@ const connection = {};
 const DEFAULT_USERNAME = 'Alice';
 
 const TransportProvider = props => {  
-  const { user, setUser } = useContext(Context);
+  const { user, setUser, setMessage } = useContext(Context);
   const [ dataChannel, setDataChannel ] = useState();
-  const [ messageHandlers, setMessageHandlers ] = useState([]);
-  const [ message, setMessage ] = useState();
-
-  useEffect(() => {
-    if (message) {
-      messageHandlers.forEach((fn) => {
-        if (fn) {
-          fn(message);
-        }
-      });
-      setMessage(null);
-    }
-  }, [ message ]);
 
   const transport = {
     open: (gameID) => open(gameID),
-    onMessage: (fn) => onMessage(fn),
     sendMessage: (message) => sendMessage(message),
   };
-
-  function onMessage(fn) {
-    setMessageHandlers(prevMessageHandlers => [...prevMessageHandlers, fn]);
-  }
 
   function sendMessage(message) {
     if (dataChannel) {

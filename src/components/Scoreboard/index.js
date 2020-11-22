@@ -25,7 +25,7 @@ function Scoreboard() {
         <TableBody>
           <TableRow>
             <TableCell scope="row">
-              <strong>{user} score:</strong>
+              <strong>{user} (me):</strong>
             </TableCell>
             <TableCell align="right">
               <strong>0</strong>
@@ -33,7 +33,7 @@ function Scoreboard() {
           </TableRow>
           <TableRow>
             <TableCell scope="row">
-              {opponent} score:
+              {opponent}:
             </TableCell>
             <TableCell align="right">
               0

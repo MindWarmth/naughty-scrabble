@@ -8,7 +8,7 @@ Link to the game:
 
 ## Game mechanics
 
-Naughty Board is multiplayer board game will erotical elements.
+Naughty Board is multiplayer board game with erotical elements.
 
 The game board consists of 100 cells (10x10).
 
@@ -34,9 +34,8 @@ It uses 3 mandatory APIs:
 
 1. **Web Worker API**\
 Is used for background calculations of game's math:
-   - chunks extraction from dictionary
-   - constructing words from matrix
-   - TODO
+   - create dictionary from text;
+   - extract all possible words (chunks) from game board;
 
 2. **Navigator.share()**\
 Is used to share invitation to join the game.

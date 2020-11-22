@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { nanoid } from 'nanoid';
 import Grid from '@material-ui/core/Grid';
@@ -19,7 +19,14 @@ const Create = () => {
   const classes = useStyles();
   const [ text, setText ] = useState('');
   const [ username, setUsername ] = useState('');
-  const { setUser, publicURL, setGameID, setDictionary } = useContext(Context);
+  const {
+    publicURL,
+    gameID, setGameID,
+    dictionary, setDictionary,
+    user, setUser,
+    opponent, setOpponent,
+    message, setMessage,
+  } = useContext(Context);
   const isWindowWorker = Boolean(window.Worker);
   const dictionaryWorker = new Worker(`${publicURL}/workers/dictionary.js`);
 
@@ -48,6 +55,14 @@ const Create = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (gameID) { setGameID(null); }
+    if (dictionary.length > 0) { setDictionary([]); }
+    if (user) { setUser(null); }
+    if (opponent) { setOpponent(null); }
+    if (message) { setMessage(null); }
+  }, []);
 
   return (
     <Grid container direction="row" justify="center">

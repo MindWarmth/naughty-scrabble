@@ -16,21 +16,17 @@ const useStyles = makeStyles((theme) => ({
 
 function Log() {
   const classes = useStyles();
-  const { user, opponent, setOpponent } = useContext(Context);
+  const { user, opponent, setOpponent, message } = useContext(Context);
   const transport = useTransport();
   const [ logs, setLogs ] = useState([]);
-  const [ message, setMessage ] = useState();
 
   useEffect(() => {
-    transport.onMessage((msg) => {
-      setMessage(msg)
-    });
-    setTimeout(() => {
+    if (user) {
       transport.sendMessage({
         type: TYPE.WELCOME,
         data: { user },
       });
-    }, 1000);
+    }
   }, []);
 
   useEffect(() => {
