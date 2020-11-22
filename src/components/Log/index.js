@@ -21,15 +21,15 @@ function Log() {
   const [ logs, setLogs ] = useState([]);
 
   useEffect(() => {
-    transport.onMessage((message) => {
-      switch (message.type) {
+    transport.onMessage(({ type, data }) => {
+      switch (type) {
         case (TYPE.WELCOME): {
-          setLogs(prevLogs => [`Opponent ${message.data.user} joined`, ...prevLogs]);
-          setOpponent(message.data.user);
+          setLogs(prevLogs => [`Opponent ${data.user} joined`, ...prevLogs]);
+          setOpponent(data.user);
           break;
         }
         case (TYPE.PLAY):
-          setLogs(prevLogs => [`${opponent}: ${message.data.previousStep.letter}`, ...prevLogs]);
+          setLogs(prevLogs => [`${opponent}: ${data.previousStep.letter}`, ...prevLogs]);
           break;
         case (TYPE.LEAVE):
           setLogs(prevLogs => [`${opponent} left the game`, ...prevLogs]);
@@ -46,11 +46,7 @@ function Log() {
   }, []);
 
   return (
-    <List
-      className={classes.root}
-      component="nav"
-      dense
-    >
+    <List className={classes.root} component="nav" dense>
       {logs.map((log, index) => (
         <ListItem key={index}>
           <ListItemText primary={log} />

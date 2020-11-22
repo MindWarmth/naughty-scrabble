@@ -30,7 +30,7 @@ const Game = () => {
     transport.onMessage(({ type, data }) => {
       switch (type) {
         case TYPE.DICTIONARY:
-          setDictionary(data)
+          setDictionary(data);
           break;
         case TYPE.PLAY:
           setCanPlay(true);
