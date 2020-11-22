@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, useMemo, useRef } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
 import flow from 'lodash/fp/flow';
 import cloneDeep from 'lodash/cloneDeep';
 import difference from 'lodash/fp/difference';
@@ -220,7 +221,9 @@ const Game = () => {
         {
           dictionary && dictionary.length > 0 && (
             <div className="dictionary">
-              { dictionary.map((word, index) => <Chip key={`dict-${index}`} label={word} disabled={foundWords.list.includes(word)} />) }
+              { dictionary.map((word, index) => 
+                <Chip key={`dict-${index}`} label={word} disabled={getOr([], 'list', foundWords).includes(word)} />
+              ) }
             </div>
           )
         }
