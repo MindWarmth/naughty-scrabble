@@ -34,6 +34,8 @@ function Board({ fieldsData, onChange, canPlay }) {
                       'board__cell--checked': field.checked,
                       'board__cell--start-vertical': field.startVertical,
                       'board__cell--start-horizontal': field.startHorizontal,
+                      'board__cell--end-vertical': field.endVertical,
+                      'board__cell--end-horizontal': field.endHorizontal,
                       'board__cell--type-vertical': field.vertical,
                       'board__cell--type-horizontal': field.horizontal,
                     } : null)}>{ field ? field.value : '' }</div>

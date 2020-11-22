@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, useMemo } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
 import flow from 'lodash/fp/flow';
+import cloneDeep from 'lodash/cloneDeep';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -60,7 +61,6 @@ const Game = () => {
 
   useEffect(() => {
     if (fieldsData) {
-      console.log('useEffect', fieldsData);
       chunksWorker.postMessage({ fieldsData });
     }
   }, [ fieldsData ]);
@@ -88,56 +88,56 @@ const Game = () => {
     return null;
   }, [ chunks, dictionary ]);
 
-  //const fieldsDataEnhanced = useMemo(() => {
-  //  let res = [ ...fieldsData ];
-  //  if (foundWords && foundWords.list && foundWords.list.length) {
-  //    Object.values(foundWords.data).forEach((curr) => {
-  //      const { type, start, end } = curr;
-//
-  //      switch (type) {
-  //        case 'horizontal':
-  //          const [ row, startCol ] = start;
-  //          const [ , endCol ] = end;
-//
-  //          for (let col = startCol; col <= endCol; col++) {
-  //            if ( col === startCol ) {
-  //              res = set(`${row}.${col}.startHorizontal`, true, res);
-  //            } else if ( col === endCol ) {
-  //              res = set(`${row}.${col}.endHorizontal`, true, res);
-  //            }
-  //            res = flow(
-  //              set(`${row}.${col}.checked`, true),
-  //              set(`${row}.${col}.horizontal`, true)
-  //            )(res);
-  //          }
-  //          break;
-//
-  //        case 'vertical':
-  //          const [ startRow, col ] = start;
-  //          const [ endRow ] = end;
-//
-  //          for (let row = startRow; row <= endRow; row++) {
-  //            if ( row === startRow ) {
-  //              res = set(`${row}.${col}.startVertical`, true, res);
-  //            } else if ( row === endRow ) {
-  //              res = set(`${row}.${col}.endVertical`, true, res);
-  //            }
-  //            res = flow(
-  //              set(`${row}.${col}.checked`, true),
-  //              set(`${row}.${col}.vertical`, true)
-  //            )(res);;
-  //          }
-  //          break;
-  //      
-  //        default:
-  //          break;
-  //      }
-  //    });
-  //    setFieldsData(res);
-  //  }
-  //  return res;
-  //
-  //}, [foundWords]);
+  const fieldsDataEnhanced = useMemo(() => {
+    let res = cloneDeep(fieldsData);
+    if (foundWords && foundWords.list && foundWords.list.length) {
+      Object.values(foundWords.data).forEach((curr) => {
+        const { type, start, end } = curr;
+
+        switch (type) {
+          case 'horizontal':
+            const [ row, startCol ] = start;
+            const [ , endCol ] = end;
+
+            for (let col = startCol; col <= endCol; col++) {
+              if ( col === startCol ) {
+                res = set(`${row}.${col}.startHorizontal`, true, res);
+              } else if ( col === endCol ) {
+                res = set(`${row}.${col}.endHorizontal`, true, res);
+              }
+              res = flow(
+                set(`${row}.${col}.checked`, true),
+                set(`${row}.${col}.horizontal`, true)
+              )(res);
+            }
+            break;
+
+          case 'vertical':
+            const [ startRow, col ] = start;
+            const [ endRow ] = end;
+
+            for (let row = startRow; row <= endRow; row++) {
+              if ( row === startRow ) {
+                res = set(`${row}.${col}.startVertical`, true, res);
+              } else if ( row === endRow ) {
+                res = set(`${row}.${col}.endVertical`, true, res);
+              }
+              res = flow(
+                set(`${row}.${col}.checked`, true),
+                set(`${row}.${col}.vertical`, true)
+              )(res);;
+            }
+            break;
+        
+          default:
+            break;
+        }
+      });
+      return res;
+    }
+    return res;
+  
+  }, [foundWords]);
 
   if (!gameID && params.gameID) {
     return <Redirect to={`/join/${params.gameID}`} />
@@ -171,10 +171,6 @@ const Game = () => {
 
   chunksWorker.onmessage = ({ data }) => setChunks(data);
 
-  console.log('chunks', chunks);
-  console.log('foundWords', foundWords);
-  // console.log('fieldsDataEnhanced', fieldsDataEnhanced);
-
   return (
     <Grid container direction="row" justify="center" alignItems="flex-start" spacing={ 3 }>
       <Grid item xs={ 12 } md={ 10 }>
@@ -182,7 +178,7 @@ const Game = () => {
       </Grid>
       <Grid item xs={ 12 } sm={ 6 }>
         <Board
-          fieldsData={ fieldsData }
+          fieldsData={ fieldsDataEnhanced }
           onChange={ handleOnBoardChange }
           canPlay={canPlay}
         />
