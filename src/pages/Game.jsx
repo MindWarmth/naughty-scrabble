@@ -7,11 +7,12 @@ import cloneDeep from 'lodash/cloneDeep';
 import difference from 'lodash/fp/difference';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Button from '@material-ui/core/Button';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
+import GameOverDialog from '../components/GameOverDialog';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import Context from '../context';
 import { useTransport, TYPE } from '../helpers/transport-provider';
 
@@ -39,6 +40,8 @@ const Game = () => {
   const transport = useTransport();
   const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
   const history = useHistory();
+  const [ gameOver, setGameOver ] = useState(false);
+  const [ confirmation, setConfirmation ] = useState(false);
 
   const foundWords = useMemo(() => {
     if (chunks && chunks.data && chunks.list && dictionary) {
@@ -102,7 +105,10 @@ const Game = () => {
         case TYPE.PLAY:
           setCanPlay(true);
           setFieldsData(data.fieldsData);
-          break;      
+          break;
+        case (TYPE.LEAVE):
+          setGameOver(true);
+          break;
         default:
           break;
       }
@@ -186,15 +192,27 @@ const Game = () => {
     });
   }
 
-  const handleLeaveClick = () => {
-    transport.sendMessage({
-      type: TYPE.LEAVE,
-    });
-    setGameID(null);
-    setDictionary([]);
-    setUser(null);
-    setOpponent(null);
+  const handleEndGameClick = () => {
+    setConfirmation(true);
+  };
+
+  const handleGameOverDialogClose = () => {
     history.push('/');
+  };
+
+  const handleConfirmationDialogClose = (isConfirmed) => {
+    if (isConfirmed) {
+      transport.sendMessage({
+        type: TYPE.LEAVE,
+      });
+      setGameID(null);
+      setDictionary([]);
+      setUser(null);
+      setOpponent(null);
+      history.push('/');
+    } else {
+      setConfirmation(false);
+    }
   };
 
   chunksWorker.onmessage = ({ data }) => setChunks(data);
@@ -212,9 +230,13 @@ const Game = () => {
         
         <Scoreboard score={score} />
 
-        <IconButton aria-label="Leave" component="span" size="small" onClick={ handleLeaveClick }>
-          <ExitToAppIcon />
-        </IconButton>
+        <Button onClick={ handleEndGameClick } color="primary" variant="outlined" fullWidth>
+          End game
+        </Button>
+
+        <GameOverDialog open={gameOver} onClose={handleGameOverDialogClose} score={score} />
+
+        <ConfirmationDialog open={confirmation} onClose={handleConfirmationDialogClose} score={score}  />
 
         {
           dictionary && dictionary.length > 0 && (
