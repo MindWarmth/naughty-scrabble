@@ -70,11 +70,11 @@ const Invite = () => {
             <code>{`${gameURL}`}</code>
           </Grid>
           <Grid item xs={ 12 }>
-            <Grid container>
+            <Grid container spacing={ 3 }>
               {
                 navigator.clipboard && (
                   <Grid item xs={ 6 }>
-                    <Button
+                    <Button fullWidth
                       color="secondary"
                       variant="outlined"
                       onClick={ handleOnClickCopyToClipboard }
@@ -89,7 +89,7 @@ const Invite = () => {
               {
                 navigator.share && (
                   <Grid item xs={ 6 }>
-                    <Button
+                    <Button fullWidth
                       color="secondary"
                       variant="outlined"
                       onClick={ handleOnClickShare }
@@ -104,7 +104,7 @@ const Invite = () => {
             </Grid>
           </Grid>
           <Grid item xs={ 6 }>
-            <Button
+            <Button fullWidth
               color="primary"
               variant="contained"
               onClick={ onJoinClick }
@@ -116,7 +116,7 @@ const Invite = () => {
             </Button>
           </Grid>
           <Grid item xs={ 6 }>
-            <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+            <Button fullWidth component={ Link } to="/create" color="primary" variant="outlined" size="large">
               <Hidden xsDown>Create new game</Hidden>
               <Hidden smUp>Create</Hidden>
             </Button>

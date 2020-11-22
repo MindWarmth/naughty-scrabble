@@ -9,8 +9,8 @@ const Welcome = () => (
       <img src={logo} className="logo" alt="Naughty Board" />
     </Grid>
     <Grid item xs={ 12 } sm={ 6 } md={ 5 }>
-      <h1>Welcome to the Naughty Board!</h1>
-      <p>Press the button below to create a new game.</p>
+      <h1>Welcome<br/>to the Naughty Board!</h1>
+      <h2>Press the button below to create a new game.</h2>
       <Button component={ Link } to="/create" color="primary" variant="contained" size="large">
         Create new game
       </Button>

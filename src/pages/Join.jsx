@@ -57,7 +57,7 @@ const Join = () => {
             />
           </Grid>
           <Grid item xs={ 6 }>
-            <Button
+            <Button fullWidth
               variant="contained"
               color="primary"
               onClick={ onJoinClick }
@@ -68,8 +68,8 @@ const Join = () => {
               Join game
             </Button>
           </Grid>
-          <Grid item xs={ 6 }>
-            <Button component={ Link } to="/create" color="primary" variant="outlined" size="large">
+          <Grid item xs={ 6 } >
+            <Button fullWidth component={ Link } to="/create" color="primary" variant="outlined" size="large">
               Create<Hidden xsDown> new game</Hidden>
             </Button>
           </Grid>
