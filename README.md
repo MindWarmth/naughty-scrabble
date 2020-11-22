@@ -4,6 +4,8 @@ Link to the game:
 
 [https://mindwarmth.github.io/naughty-scrabble](https://mindwarmth.github.io/naughty-scrabble).
 
+[VIDEO – How it works](https://youtu.be/vCc7d20QrBw)
+
 This project was created for The Lucky Wheel Hackathon.
 
 ![Naughty Board gameplay](screenshot.jpg)
