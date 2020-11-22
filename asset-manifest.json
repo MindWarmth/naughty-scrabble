@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/naughty-scrabble/static/css/main.5f9da805.chunk.css",
-    "main.js": "/naughty-scrabble/static/js/main.840a9d93.chunk.js",
-    "main.js.map": "/naughty-scrabble/static/js/main.840a9d93.chunk.js.map",
-    "runtime-main.js": "/naughty-scrabble/static/js/runtime-main.9dcd2019.js",
-    "runtime-main.js.map": "/naughty-scrabble/static/js/runtime-main.9dcd2019.js.map",
-    "static/js/2.6ddae706.chunk.js": "/naughty-scrabble/static/js/2.6ddae706.chunk.js",
-    "static/js/2.6ddae706.chunk.js.map": "/naughty-scrabble/static/js/2.6ddae706.chunk.js.map",
-    "static/js/3.6ee91ea5.chunk.js": "/naughty-scrabble/static/js/3.6ee91ea5.chunk.js",
-    "static/js/3.6ee91ea5.chunk.js.map": "/naughty-scrabble/static/js/3.6ee91ea5.chunk.js.map",
+    "main.css": "/naughty-scrabble/static/css/main.701ab78e.chunk.css",
+    "main.js": "/naughty-scrabble/static/js/main.195eeb21.chunk.js",
+    "main.js.map": "/naughty-scrabble/static/js/main.195eeb21.chunk.js.map",
+    "runtime-main.js": "/naughty-scrabble/static/js/runtime-main.cf470107.js",
+    "runtime-main.js.map": "/naughty-scrabble/static/js/runtime-main.cf470107.js.map",
+    "static/js/2.09bc0020.chunk.js": "/naughty-scrabble/static/js/2.09bc0020.chunk.js",
+    "static/js/2.09bc0020.chunk.js.map": "/naughty-scrabble/static/js/2.09bc0020.chunk.js.map",
+    "static/js/3.151c8f8e.chunk.js": "/naughty-scrabble/static/js/3.151c8f8e.chunk.js",
+    "static/js/3.151c8f8e.chunk.js.map": "/naughty-scrabble/static/js/3.151c8f8e.chunk.js.map",
     "index.html": "/naughty-scrabble/index.html",
-    "static/css/main.5f9da805.chunk.css.map": "/naughty-scrabble/static/css/main.5f9da805.chunk.css.map",
-    "static/js/2.6ddae706.chunk.js.LICENSE.txt": "/naughty-scrabble/static/js/2.6ddae706.chunk.js.LICENSE.txt",
+    "static/css/main.701ab78e.chunk.css.map": "/naughty-scrabble/static/css/main.701ab78e.chunk.css.map",
+    "static/js/2.09bc0020.chunk.js.LICENSE.txt": "/naughty-scrabble/static/js/2.09bc0020.chunk.js.LICENSE.txt",
     "static/media/logo.6ba9428e.gif": "/naughty-scrabble/static/media/logo.6ba9428e.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.9dcd2019.js",
-    "static/js/2.6ddae706.chunk.js",
-    "static/css/main.5f9da805.chunk.css",
-    "static/js/main.840a9d93.chunk.js"
+    "static/js/runtime-main.cf470107.js",
+    "static/js/2.09bc0020.chunk.js",
+    "static/css/main.701ab78e.chunk.css",
+    "static/js/main.195eeb21.chunk.js"
   ]
 }
