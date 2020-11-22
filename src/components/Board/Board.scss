@@ -1,6 +1,7 @@
 $cellSize: 28px;
 
 .board {
+    margin-top: 4vh;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -91,6 +92,8 @@ $cellSize: 28px;
             color: white;
             cursor: pointer;
             transition: .2s transform;
+            padding-top: 2px;
+            line-height: 23px;
 
             &:hover,
             &:focus {
@@ -98,6 +101,7 @@ $cellSize: 28px;
             }
     
             &:focus {
+                border: 2px solid rgba(192, 204, 25, 0.658);
                 box-shadow: 0 0 10px rgba(235, 250, 19, 0.8);
                 transform: scale(1.3);
             }

@@ -7,7 +7,6 @@ import DoneIcon from '@material-ui/icons/Done';
 import ClearIcon from '@material-ui/icons/Clear';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
 
@@ -73,7 +72,7 @@ const Invite = () => {
             <Grid container spacing={ 3 }>
               {
                 navigator.clipboard && (
-                  <Grid item xs={ 6 }>
+                  <Grid item xs={ 12 } sm={6} >
                     <Button fullWidth
                       color="secondary"
                       variant="outlined"
@@ -81,14 +80,14 @@ const Invite = () => {
                       size="large"
                       startIcon={copyStatus === COPY_STATUS.READY ? <FileCopyIcon /> : copyStatus === COPY_STATUS.SUCCESS ? <DoneIcon /> : <ClearIcon />}
                     >
-                      Copy<Hidden xsDown> to cliboard</Hidden>
+                      Copy to cliboard
                     </Button>
                   </Grid>
                 )
               }
               {
                 navigator.share && (
-                  <Grid item xs={ 6 }>
+                  <Grid item xs={ 12 } sm={6} >
                     <Button fullWidth
                       color="secondary"
                       variant="outlined"
@@ -103,7 +102,7 @@ const Invite = () => {
               }
             </Grid>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ 12 } sm={6} >
             <Button fullWidth
               color="primary"
               variant="contained"
@@ -112,13 +111,12 @@ const Invite = () => {
               size="large"
               startIcon={ loading && <CircularProgress size={ 16 } /> }
             >
-              Start<Hidden xsDown> game</Hidden>
+              Start the Game!
             </Button>
           </Grid>
-          <Grid item xs={ 6 }>
+          <Grid item xs={ 12 } sm={6} >
             <Button fullWidth component={ Link } to="/create" color="primary" variant="outlined" size="large">
-              <Hidden xsDown>Create new game</Hidden>
-              <Hidden smUp>Create</Hidden>
+              Create a new game
             </Button>
           </Grid>
         </Grid>
