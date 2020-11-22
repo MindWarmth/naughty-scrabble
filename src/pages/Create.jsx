@@ -97,7 +97,8 @@ const Create = () => {
               onChange={ handleOnChangeTextField }
             />
             <Button
-              variant="contained"
+              fullWidth
+              variant="outlined"
               color="secondary"
               className={classes.formEl}
               startIcon={<AssignmentIcon />}
@@ -107,7 +108,16 @@ const Create = () => {
             </Button>
           </Grid>
           <Grid item xs={ 12 }>
-            <Button component={ Link } disabled={!text} onClick={ handleOnClickProceed } to="/invite" color="primary" variant="contained" size="large">
+            <Button 
+              fullWidth
+              component={ Link } 
+              disabled={!text} 
+              onClick={ handleOnClickProceed } 
+              to="/invite"
+              color="primary"
+              variant="contained"
+              size="large"
+            >
               Proceed
             </Button>
           </Grid>
