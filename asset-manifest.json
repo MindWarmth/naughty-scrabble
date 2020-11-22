@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/naughty-scrabble/static/css/main.3525fcaf.chunk.css",
-    "main.js": "/naughty-scrabble/static/js/main.652713f2.chunk.js",
-    "main.js.map": "/naughty-scrabble/static/js/main.652713f2.chunk.js.map",
+    "main.js": "/naughty-scrabble/static/js/main.b21d233b.chunk.js",
+    "main.js.map": "/naughty-scrabble/static/js/main.b21d233b.chunk.js.map",
     "runtime-main.js": "/naughty-scrabble/static/js/runtime-main.5ed8d7d3.js",
     "runtime-main.js.map": "/naughty-scrabble/static/js/runtime-main.5ed8d7d3.js.map",
     "static/js/2.2c765052.chunk.js": "/naughty-scrabble/static/js/2.2c765052.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.5ed8d7d3.js",
     "static/js/2.2c765052.chunk.js",
     "static/css/main.3525fcaf.chunk.css",
-    "static/js/main.652713f2.chunk.js"
+    "static/js/main.b21d233b.chunk.js"
   ]
 }
