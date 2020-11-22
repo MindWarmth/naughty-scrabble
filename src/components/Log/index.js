@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Log() {
+const Log = ({ canPlay }) => {
   const classes = useStyles();
   const { user, opponent, setOpponent, message } = useContext(Context);
   const transport = useTransport();
-  const [ logs, setLogs ] = useState([]);
+  const [ log, setLog ] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -34,30 +34,22 @@ function Log() {
       const { type, data } = message;
       switch (type) {
         case (TYPE.WELCOME): {
-          setLogs(prevLogs => [`${data.user} joined to the game`, ...prevLogs]);
+          setLog(`${data.user} joined to the game`);
           setOpponent(data.user);
           break;
         }
         case (TYPE.PLAY):
-          setLogs(prevLogs => [`${opponent}: ${data.previousStep.letter}`, ...prevLogs]);
+          setLog(`${opponent} enters ${data.previousStep.letter}. Your turn!`);
           break;
         case (TYPE.LEAVE):
-          setLogs(prevLogs => [`${opponent} left the game`, ...prevLogs]);
+          setLog(`${opponent} left the game`);
           break;
         default:
       }
     }
   }, [ message ]);
 
-  return (
-    <List className={classes.root} component="nav" dense>
-      {logs.map((log, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={log} />
-        </ListItem>
-      ))}
-    </List>
-  );
+  return <div>{ canPlay ? log : 'Waiting for opponent.....'}</div>;
 }
 
 export default Log;

@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Scoreboard() {
+const Scoreboard = ({ score }) => {
   const classes = useStyles();
   const { user, opponent } = useContext(Context);
 
@@ -28,7 +28,7 @@ function Scoreboard() {
               <strong>{user} (me):</strong>
             </TableCell>
             <TableCell align="right">
-              <strong>0</strong>
+              <strong>{ score.mine }</strong>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -36,7 +36,7 @@ function Scoreboard() {
               {opponent} (opponent):
             </TableCell>
             <TableCell align="right">
-              0
+              { score.opponent }
             </TableCell>
           </TableRow>
         </TableBody>
