@@ -19,7 +19,7 @@ const LOCALSTORAGE_DICTIONARY_KEY = 'dictionary';
 
 const Create = () => {
   const classes = useStyles();
-  const [ text, setText ] = useState(localStorage.getItem(LOCALSTORAGE_DICTIONARY_KEY));
+  const [ text, setText ] = useState(localStorage.getItem(LOCALSTORAGE_DICTIONARY_KEY) || '');
   const [ username, setUsername ] = useState(getRandomName());
   const {
     publicURL,
