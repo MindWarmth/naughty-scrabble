@@ -4,7 +4,7 @@ onmessage = function({ data }) {
   const MAX_WORD_LENGTH = 10;
   
   const text = String(data).toUpperCase();
-  const dict = text.match(/([A-Z])\w+/g);
+  const dict = text.match(/\b[^\d\W_]+\b/g);
   const res = dict && dict.length ? dict.reduce((acc, current) => {
     if (current 
         && current.length >= MIN_WORD_LENGTH 
