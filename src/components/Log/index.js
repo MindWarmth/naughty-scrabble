@@ -22,7 +22,7 @@ const Log = ({ canPlay }) => {
       const { type, data } = message;
       switch (type) {
         case (TYPE.WELCOME): {
-          setLog(`${data.user} joined to the game`);
+          setLog(`${data.user} joined. Let's go!`);
           setOpponent(data.user);
           break;
         }

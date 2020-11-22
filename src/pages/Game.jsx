@@ -242,6 +242,7 @@ const Game = () => {
         {
           dictionary && dictionary.length > 0 && (
             <div className="dictionary">
+              <h3 className="dictionary__subtitle">Your dictionary:</h3>
               { dictionary.map((word, index) => 
                 <Chip key={`dict-${index}`} label={word} disabled={getOr([], 'list', foundWords).includes(word)} />
               ) }
