@@ -74,3 +74,36 @@ Builds the app in production mode and deploy it to the GitHub Pages.
 ## Peer-To-Peer Real Time Demo
 
 ![Naughty Board gameplay Demo](naughty-board-demo.gif)
+
+
+<!-- CONTREEBUTORS:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+## Contributors
+
+Thanks goes to these wonderful people:
+
+<table>
+   <tr>
+      <td align="center">
+         <a href="https://github.com/boguslavsky">
+         <img src="https://avatars1.githubusercontent.com/u/303763?v=4" width="100px;" alt="Ivan Bohuslavskyi"/>
+         <br />
+         <sub><b>Ivan Bohuslavskyi</b></sub>
+         </a>
+         <br />
+      </td>
+      <td align="center">
+         <a href="https://github.com/roman-vabishchevych">
+         <img src="https://avatars3.githubusercontent.com/u/4134474?v=4" width="100px;" alt="Roman Vabishchevych"/>
+         <br />
+         <sub><b>Roman Vabishchevych</b></sub>
+         </a>
+         <br />
+      </td>
+   </tr>
+</table>
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- CONTREEBUTORS:END -->
