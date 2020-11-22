@@ -58,7 +58,6 @@ const Game = () => {
 
   useEffect(() => {
     if (fieldsData) {
-      console.log('useEffect', fieldsData);
       chunksWorker.postMessage({ fieldsData });
     }
   }, [ fieldsData ]);
