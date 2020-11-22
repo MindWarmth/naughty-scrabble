@@ -1,8 +1,10 @@
-import { useContext, useState, useEffect, useMemo } from 'react';
+import { useContext, useState, useEffect, useMemo, useRef } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
+import get from 'lodash/fp/get';
 import flow from 'lodash/fp/flow';
 import cloneDeep from 'lodash/cloneDeep';
+import difference from 'lodash/fp/difference';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +17,14 @@ import { useTransport, TYPE } from '../helpers/transport-provider';
 
 const SIZE = 10;
 
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+}
+
 const Game = () => {
   const params = useParams();
   const { gameID, setGameID, dictionary, setDictionary, user, setUser, publicURL, setOpponent, message } = useContext(Context);
@@ -25,9 +35,49 @@ const Game = () => {
   );
   const [ chunks, setChunks ] = useState();
   const [ canPlay, setCanPlay ] = useState(true);
+  const [ score, setScore ] = useState( { mine: 0, opponent: 0 } );
   const transport = useTransport();
   const chunksWorker = new Worker(`${publicURL}/workers/chunks.js`);
   const history = useHistory();
+
+  const foundWords = useMemo(() => {
+    if (chunks && chunks.data && chunks.list && dictionary) {
+      return chunks.list.reduce((acc, chunk) => {
+
+        if (dictionary.includes(chunk)) {
+          return {
+            data: {
+              ...acc.data,
+              [chunk]: chunks.data[chunk],
+            },
+            list: [...acc.list, chunk]
+          }
+        }
+
+        return acc;
+      }, {
+        data: {},
+        list: []
+      })
+    }
+    return null;
+  }, [ chunks, dictionary ]);
+
+  const prevFoundWords = usePrevious(foundWords);
+
+  useEffect(() => {
+    if (foundWords) {
+      const list = get('list', foundWords) || [];
+      const prevList = get('list', prevFoundWords) || [];
+      const diffWords = difference(list)(prevList);
+      const scoreValue = diffWords.join('').length * diffWords.length;
+      if (canPlay) {
+        setScore((prevScore) => set('opponent', prevScore.opponent + scoreValue, prevScore));
+      } else {
+        setScore((prevScore) => set('mine', prevScore.mine + scoreValue, prevScore));
+      }
+    }
+  }, [ foundWords ])
 
   useEffect(() => {
     if (dictionary.length > 0) {
@@ -59,29 +109,7 @@ const Game = () => {
     }
   }, [ message ]);
 
-  const foundWords = useMemo(() => {
-    if (chunks && chunks.data && chunks.list && dictionary) {
-      return chunks.list.reduce((acc, chunk) => {
-
-        if (dictionary.includes(chunk)) {
-          return {
-            data: {
-              ...acc.data,
-              [chunk]: chunks.data[chunk],
-            },
-            list: [...acc.list, chunk]
-          }
-        }
-
-        return acc;
-      }, {
-        data: {},
-        list: []
-      })
-    }
-    return null;
-  }, [ chunks, dictionary ]);
-
+  
   useEffect(() => {
     if (fieldsData) {
       chunksWorker.postMessage({ fieldsData, foundWords });
@@ -201,7 +229,7 @@ const Game = () => {
             <Log />
           </Grid>
           <Grid item xs={ 12 }>
-            <Scoreboard />
+            <Scoreboard score={score} />
           </Grid>
         </Grid>
       </Grid>
