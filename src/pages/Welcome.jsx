@@ -14,7 +14,7 @@ const Welcome = () => (
       <Button style={{maxWidth: 280}} fullWidth component={ Link } to="/create" color="primary" variant="contained" size="large">
         Play
       </Button>
-      <p>To join an existed game you need a link.</p>
+      <p>To join an existing game you need a link.</p>
     </Grid>
   </Grid>
 );

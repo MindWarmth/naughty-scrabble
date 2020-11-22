@@ -10,7 +10,7 @@ Link to the game:
 
 ## Game mechanics
 
-Naughty Board is easy-going multiplayer board game.
+Naughty Board is a peer-to-peer realtime board game.
 
 The game board consists of 100 cells (10x10).
 
