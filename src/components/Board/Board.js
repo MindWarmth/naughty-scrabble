@@ -25,12 +25,18 @@ function Board({ fieldsData, onChange, canPlay }) {
         { rows.map(( rval, rowIndex) => (
           <div className='board__row' key={`row-${rowIndex}`}>
             { cols.map(( cval, colIndex) => {
-              const value = get(`${rowIndex}.${colIndex}`, fieldsData);
+              const field = get(`${rowIndex}.${colIndex}`, fieldsData);
               return (
                 <div className="board__col" key={`col-${colIndex}`}>
-                  { canPlay && !value ? 
+                  { canPlay && !field ? 
                     <input className="board__cell" value='' onChange={handleOnFieldChange(rowIndex, colIndex)} /> :
-                    <div className="board__cell">{ value }</div>
+                    <div className={ cn("board__cell", field ? {
+                      'board__cell--checked': field.checked,
+                      'board__cell--start-vertical': field.startVertical,
+                      'board__cell--start-horizontal': field.startHorizontal,
+                      'board__cell--type-vertical': field.vertical,
+                      'board__cell--type-horizontal': field.horizontal,
+                    } : null)}>{ field ? field.value : '' }</div>
                   }
                 </div>
               )

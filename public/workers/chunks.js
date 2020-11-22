@@ -11,11 +11,11 @@ onmessage = function({ data: { fieldsData } }) {
     let startCol = null;
 
     for (let col = 0; col < lenght; col++) {
-      let letter = fieldsData[row][col];
+      let { value } = fieldsData[row][col] || {};
 
-      if (letter) {
-        if (!word) { startCol = row };
-        word += letter;
+      if (value) {
+        if (!word) { startCol = col };
+        word += value;
 
         // if end of word and unique
         if (!fieldsData[row][col + 1] && !chunks.data[word]) {
@@ -34,11 +34,11 @@ onmessage = function({ data: { fieldsData } }) {
     let startRow = null;
     
     for (let row = 0; row < lenght; row++) {
-      let letter = fieldsData[row][col];
+      let { value } = fieldsData[row][col] || {};
 
-      if (letter) {
+      if (value) {
         if (!word) { startRow = row; }
-        word += letter;
+        word += value;
 
         // if end of word and unique
         if (!fieldsData[row + 1][col] && !chunks.data[word]) {
