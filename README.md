@@ -70,3 +70,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 #### `yarn deploy`
 
 Builds the app in production mode and deploy it to the GitHub Pages.
+
+## Peer-To-Peer Real Time Demo
+
+![Naughty Board gameplay Demo](naughty-board-demo.gif)
