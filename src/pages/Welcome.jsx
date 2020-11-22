@@ -22,7 +22,7 @@ const Welcome = () => (
         <h1 style={{textAlign: 'center'}}>How it works</h1>
         <div className="media">
           <div className="media__inner">
-            <iframe title="How it works" width="560" height="315" src="https://www.youtube.com/embed/vCc7d20QrBw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
+            <iframe title="How it works" width="560" height="315" src="https://www.youtube.com/embed/W0QCAZZyFpE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen />
           </div>
         </div>
       </Grid>
