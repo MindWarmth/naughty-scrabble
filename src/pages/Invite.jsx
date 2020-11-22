@@ -32,7 +32,7 @@ const Invite = () => {
     navigator
       .share({
         url: `${gameURL}`,
-        title: "SCRABBLE",
+        title: "Naughty Board",
         text: "Invite your friend to the game!"
       })
       .then(() => console.log("Invite sent!"))
