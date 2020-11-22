@@ -8,7 +8,7 @@ Link to the game:
 
 ## Game mechanics
 
-Naughty Board is multiplayer board game with erotical elements.
+Naughty Board is easy-going multiplayer board game.
 
 The game board consists of 100 cells (10x10).
 
@@ -35,13 +35,13 @@ It uses 3 mandatory APIs:
 1. **Web Worker API**\
 Is used for background calculations of game's math:
    - create dictionary from text;
-   - extract all possible words (chunks) from game board;
+   - find all possible words (chunks) from game board;
 
 2. **Navigator.share()**\
 Is used to share invitation to join the game.
 
 3. **Clipboard API**\
-Is used to read dictionary from clipboard and to copy invitation to the game to clipboard.
+Is used to read dictionary from clipboard and to copy invitation to clipboard.
 
 And 2 additional:
 
@@ -50,6 +50,9 @@ Is used together with primitive remote WebSocket server to let players to have i
 
 5. **WebRTC**\
 Is used for peer-to-peer communication between players during the game.
+
+6. **Web Storage API**\
+Is used to memorize player's username and dictionary for future games.
 
 ## Install and run
 
