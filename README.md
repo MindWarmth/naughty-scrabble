@@ -1,6 +1,6 @@
 # Naughty Board game
 
-Link to the game:
+Link to the game.
 
 [https://mindwarmth.github.io/naughty-scrabble](https://mindwarmth.github.io/naughty-scrabble).
 
@@ -8,7 +8,7 @@ Link to the game:
 
 This project was created for The Lucky Wheel Hackathon.
 
-![Naughty Board gameplay](screenshot.jpg)
+<img src="screenshot.jpg" height="600" alt="Naughty Board gameplay">
 
 ## Game mechanics
 
