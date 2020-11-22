@@ -1,5 +1,5 @@
 onmessage = function({ data }) {
-  console.info('Worker: Message received from main script', data);
+  console.info('Worker/Dictionary: received { data }', data);
   const MIN_WORD_LENGTH = 3;
   
   const text = String(data).toUpperCase();

@@ -59,12 +59,6 @@ const Game = () => {
     }
   }, [ message ]);
 
-  useEffect(() => {
-    if (fieldsData) {
-      chunksWorker.postMessage({ fieldsData });
-    }
-  }, [ fieldsData ]);
-
   const foundWords = useMemo(() => {
     if (chunks && chunks.data && chunks.list && dictionary) {
       return chunks.list.reduce((acc, chunk) => {
@@ -87,6 +81,12 @@ const Game = () => {
     }
     return null;
   }, [ chunks, dictionary ]);
+
+  useEffect(() => {
+    if (fieldsData) {
+      chunksWorker.postMessage({ fieldsData, foundWords });
+    }
+  }, [ fieldsData ]);
 
   const fieldsDataEnhanced = useMemo(() => {
     let res = cloneDeep(fieldsData);
@@ -144,7 +144,7 @@ const Game = () => {
   }
 
   const handleOnBoardChange = ({ row, col, letter }) => {
-    const newFieldsData = set(`${row}.${col}.value`, letter, fieldsData);
+    const newFieldsData = set(`${row}.${col}.value`, letter, fieldsDataEnhanced || fieldsData);
     
     setCanPlay(false);
     setFieldsData(newFieldsData);
