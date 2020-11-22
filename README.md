@@ -2,7 +2,7 @@
 
 This project was created for The Lucky Wheel Hackathon.
 
-![Naughty Board gameplay](screenshot.png)
+![Naughty Board gameplay](screenshot.jpg)
 
 Link to the game:
 
