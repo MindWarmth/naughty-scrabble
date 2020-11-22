@@ -1,5 +1,6 @@
-import React, { useContext, createContext, useEffect, useState } from 'react';
+import React, { useContext, createContext, useState } from 'react';
 import Context from '../context';
+import { getRandomName } from './random-name';
 
 export const TYPE = {
   DICTIONARY: 'dictionary',
@@ -16,7 +17,6 @@ const crossBrowserPeerConnection = window.RTCPeerConnection || window.mozRTCPeer
 const crossBrowserSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription;
 const config = { "iceServers": [ { "urls":"stun:stun.l.google.com:19302" } ] };
 const connection = {};
-const DEFAULT_USERNAME = 'Alice';
 
 const TransportProvider = props => {  
   const { user, setUser, setMessage } = useContext(Context);
@@ -41,7 +41,7 @@ const TransportProvider = props => {
       var username;
       
       if (!user) {
-        username = `${DEFAULT_USERNAME}_${Math.floor(Math.random() * 1000000)}`;
+        username = getRandomName();
         setUser(username);
       } else {
         username = user;

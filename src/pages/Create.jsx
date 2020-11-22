@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { makeStyles } from '@material-ui/core/styles';
 import Context from '../context';
+import { getRandomName } from '../helpers/random-name';
 
 const useStyles = makeStyles({
   formEl: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
 const Create = () => {
   const classes = useStyles();
   const [ text, setText ] = useState('');
-  const [ username, setUsername ] = useState('');
+  const [ username, setUsername ] = useState(getRandomName());
   const {
     publicURL,
     gameID, setGameID,

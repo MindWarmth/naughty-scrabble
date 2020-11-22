@@ -33,7 +33,7 @@ function Scoreboard() {
           </TableRow>
           <TableRow>
             <TableCell scope="row">
-              {opponent}:
+              {opponent} (opponent):
             </TableCell>
             <TableCell align="right">
               0

@@ -7,6 +7,7 @@ import Hidden from '@material-ui/core/Hidden';
 import TextField from '@material-ui/core/TextField';
 import Context from '../context';
 import { useTransport } from '../helpers/transport-provider';
+import { getRandomName } from '../helpers/random-name';
 
 const Join = () => {
   const [ loading, setLoading ] = useState(false);
@@ -15,7 +16,7 @@ const Join = () => {
   const { setGameID, setUser } = useContext(Context);
   const gamePath = `/game/${gameID}`;
   const transport = useTransport();
-  const [ username, setUsername ] = useState('');
+  const [ username, setUsername ] = useState(getRandomName());
 
   const handleOnChangeUsernameField = ({ currentTarget: { value } }) => setUsername(value);
 
