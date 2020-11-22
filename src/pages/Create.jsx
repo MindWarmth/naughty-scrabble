@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { makeStyles } from '@material-ui/core/styles';
 import Context from '../context';
-import { getRandomName } from '../helpers/random-name';
+import { getUsername } from '../helpers/username';
 
 const useStyles = makeStyles({
   formEl: {
@@ -20,7 +20,7 @@ const LOCALSTORAGE_DICTIONARY_KEY = 'dictionary';
 const Create = () => {
   const classes = useStyles();
   const [ text, setText ] = useState(localStorage.getItem(LOCALSTORAGE_DICTIONARY_KEY) || '');
-  const [ username, setUsername ] = useState(getRandomName());
+  const [ username, setUsername ] = useState(getUsername());
   const {
     publicURL,
     gameID, setGameID,

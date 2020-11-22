@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useState } from 'react';
 import Context from '../context';
-import { getRandomName } from './random-name';
+import { getUsername } from './username';
 
 export const TYPE = {
   DICTIONARY: 'dictionary',
@@ -41,7 +41,7 @@ const TransportProvider = props => {
       var username;
       
       if (!user) {
-        username = getRandomName();
+        username = getUsername();
         setUser(username);
       } else {
         username = user;
