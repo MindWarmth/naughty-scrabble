@@ -1,0 +1,20 @@
+h1 {
+  font-size: 1.25em;
+}
+
+.app {
+  padding: 16px;
+}
+
+.logo {
+  max-width: 100%;
+}
+
+.dictionary {
+  margin: 30px 0;
+  text-align: center;
+  
+  & > div {
+    margin: 5px;
+  }
+}

@@ -2,12 +2,13 @@ import { useContext, useState, useEffect, useMemo, useRef } from 'react';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import set from 'lodash/fp/set';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
 import flow from 'lodash/fp/flow';
 import cloneDeep from 'lodash/cloneDeep';
 import difference from 'lodash/fp/difference';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Board from '../components/Board';
 import Log from '../components/Log';
 import Scoreboard from '../components/Scoreboard';
@@ -240,7 +241,11 @@ const Game = () => {
 
         {
           dictionary && dictionary.length > 0 && (
-            <div>{ dictionary.map((word) => `${word}, `) }</div>
+            <div className="dictionary">
+              { dictionary.map((word, index) => 
+                <Chip key={`dict-${index}`} label={word} disabled={getOr([], 'list', foundWords).includes(word)} />
+              ) }
+            </div>
           )
         }
 

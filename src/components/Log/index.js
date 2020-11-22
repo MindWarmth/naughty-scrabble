@@ -1,21 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Context from '../../context';
 import { useTransport, TYPE } from '../../helpers/transport-provider';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    maxHeight: 124,
-    overflow: 'auto',
-  },
-}));
+import './Log.scss'
 
 const Log = ({ canPlay }) => {
-  const classes = useStyles();
   const { user, opponent, setOpponent, message } = useContext(Context);
   const transport = useTransport();
   const [ log, setLog ] = useState('');
@@ -39,7 +27,7 @@ const Log = ({ canPlay }) => {
           break;
         }
         case (TYPE.PLAY):
-          setLog(`${opponent} enters ${data.previousStep.letter}. Your turn!`);
+          setLog(`${opponent} puts [${data.previousStep.letter}]. Your turn!`);
           break;
         case (TYPE.LEAVE):
           setLog(`${opponent} left the game`);
@@ -49,7 +37,7 @@ const Log = ({ canPlay }) => {
     }
   }, [ message ]);
 
-  return <div>{ canPlay ? log : 'Waiting for opponent.....'}</div>;
+  return <div className="log">{ canPlay ? log : `Waiting for ${opponent}.....`}</div>;
 }
 
 export default Log;

@@ -8,7 +8,7 @@ export const getUsername = () => {
   }
 
   const prefix = USERNAMES[Math.floor(Math.random() * USERNAMES.length)];
-  const number = Math.floor(Math.random() * 1000000);
+  const number = Math.floor(Math.random() * 100);
   username = `${prefix}_${number}`;
 
   localStorage.setItem(LOCALSTORAGE_KEY, username);
