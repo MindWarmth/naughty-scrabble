@@ -45,7 +45,7 @@ Is used to share invitation to join the game.
 3. **Clipboard API**\
 Is used to read dictionary from clipboard and to copy invitation to clipboard.
 
-And 2 additional:
+And 3 additional:
 
 4. **WebSockets API**\
 Is used together with primitive remote WebSocket server to let players to have initial "handshake" before they can establish peer-to-peer connection using WebRTC.
