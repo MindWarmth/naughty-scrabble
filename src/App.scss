@@ -9,3 +9,9 @@ h1 {
 .logo {
   max-width: 100%;
 }
+
+.dictionary {
+  & > div {
+    margin: 5px;
+  }
+}

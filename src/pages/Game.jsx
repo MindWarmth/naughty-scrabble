@@ -6,7 +6,8 @@ import flow from 'lodash/fp/flow';
 import cloneDeep from 'lodash/cloneDeep';
 import difference from 'lodash/fp/difference';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
+import Paper from '@material-ui/core/Paper';
+import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Board from '../components/Board';
@@ -218,7 +219,9 @@ const Game = () => {
 
         {
           dictionary && dictionary.length > 0 && (
-            <div>{ dictionary.map((word) => `${word}, `) }</div>
+            <div className="dictionary">
+              { dictionary.map((word, index) => <Chip key={`dict-${index}`} label={word} disabled={foundWords.list.includes(word)} />) }
+            </div>
           )
         }
 

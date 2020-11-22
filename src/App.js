@@ -12,7 +12,7 @@ import Invite from './pages/Invite';
 import Join from './pages/Join';
 import Game from './pages/Game';
 import TransportProvider from './helpers/transport-provider';
-import './App.css';
+import './App.scss';
 
 function App() {
   const theme = createMuiTheme({
